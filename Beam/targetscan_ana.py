@@ -1,5 +1,7 @@
 #!/usr/local/bin/python
 
+#This code finds the BNB target center based on horizontal and vertical scans
+
 ################################
 # PREPARE ENVIRONMENT
 ################################
