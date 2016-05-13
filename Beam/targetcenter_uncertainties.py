@@ -20,6 +20,8 @@ import scipy.stats as stats
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 import pandas as pd
 import csv
+from matplotlib.backends.backend_pdf import PdfPages
+pp = PdfPages('TargetScanUncertainties_run0005544.pdf')
 
 n_pulls=30
 FinHFits=[]
@@ -44,13 +46,40 @@ bsname = ['Horizontal Fin Scan ', 'Horizontal Slug Scan ','Vertical Scan ']
 pmname = ['BPM 875 ', 'BPM TG1 ', 'BPM TG2 ']
 lmname = ['LM 875A ', 'LM 875B ', 'LM 875C ']
 
+figFinH,  axarrFinH  = plt.subplots(3,3,figsize=(11,9),sharex=False,sharey=False)
+figSlugH, axarrSlugH = plt.subplots(3,3,figsize=(11,9),sharex=False,sharey=False)
+figSlugV, axarrSlugV = plt.subplots(3,3,figsize=(11,9),sharex=False,sharey=False)
+
+fig = [figFinH, figSlugH, figSlugV]
+axarr = [axarrFinH, axarrSlugH, axarrSlugV]
+
 bs=0
 for beamScan,beamScanCov in zip(TargetFits,TargetCovM):
     #print 'beamScan '+str(bs)
+    fig[bs].subplots_adjust(left=0.1, bottom=0.1, top=0.92, wspace=0.3, hspace=0.3)
+
+    fig[bs].text(0.5, 0.03, 'Center position (mm)', ha='center', size='large')
+    fig[bs].text(0.015, 0.5, 'Frequency of center position', va='center', rotation='vertical', size='large')
+    fig[bs].text(0.3,0.97, bsname[bs], size='large')
+    axarr[bs][0,0].set_title(pmname[0])
+    axarr[bs][0,1].set_title(pmname[1])
+    axarr[bs][0,2].set_title(pmname[2])
+    axarr[bs][0,0].set_ylabel(lmname[0])
+    axarr[bs][1,0].set_ylabel(lmname[1])
+    axarr[bs][2,0].set_ylabel(lmname[2])
+    for l in range(0,3):
+        for j in range(0,3):
+            #f7axarr[f][l,j].ticklabel_format(style='sci', axis='x', scilimits=(0,0))
+            axarr[bs][l,j].grid(True)
+
+
+
     pm=0
     for positionMon,positionMonCov in zip(beamScan,beamScanCov):
         #print '     positionMon '+str(pm)
         lm=0
+        minx=999
+        maxx=-999
         for lossMon,lossMonCov in zip(positionMon,positionMonCov):
             #print '         lossMon '+str(lm)
 
@@ -77,13 +106,35 @@ for beamScan,beamScanCov in zip(TargetFits,TargetCovM):
                 for r2 in secondRoots:
                     center=np.mean([r1,r2])
                     centers.append(center)
+
+            if np.amax(centers)>maxx:
+                maxx=np.amax(centers)
+            if np.amin(centers)>minx:
+                minx=np.amin(centers)
+
+
             meanCenter = np.mean(centers)
             stdCenter = np.std(centers)
 
-            print bsname[bs]+ pmname[pm]+lmname[lm]+ str(meanCenter) + " +/- " + str(stdCenter)
-            #plt.hist(centers,50)
-            #plt.show()
+            string = bsname[bs]+ pmname[pm]+lmname[lm]+ str(meanCenter) + " +/- " + str(stdCenter)
+            print string
+            nums = str(meanCenter) + " +/- " + str(stdCenter)
+            axarr[bs][lm,pm].hist(centers,50)
+            #axarr[bs][lm,pm].annotate(nums)
 
             lm=lm+1
+
+        #axarr[bs][0,pm].set_xlim(minx,maxx)
+        #axarr[bs][1,pm].set_xlim(minx,maxx)
+        #axarr[bs][2,pm].set_xlim(minx,maxx)
+
         pm=pm+1
+
     bs=bs+1
+
+
+#plt.show()
+pp.savefig(fig[0])
+pp.savefig(fig[1])
+pp.savefig(fig[2])
+pp.close()

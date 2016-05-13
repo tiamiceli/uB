@@ -603,20 +603,20 @@ for i in range(2,4): ##for i in range(0,4):
     fitvectorTG2 = [fitvectorATG2, fitvectorBTG2, fitvectorCTG2]
 
     polyfitATG2L, polyCovMATG2L =np.polyfit(xHPTG2lA ,yTG2[0][0],deg=1,cov=True)
-    print "********************************************"
-    print "********************************************"
-    print "********************************************"
-    print "xHPTG2lA.shape"
-    print xHPTG2lA.shape
-    print "yTG2[0][0].shape"
-    print yTG2[0][0].shape
-    print "polyfitATG2L.shape"
-    print polyfitATG2L.shape
-    print "polyfitATG2L"
-    print polyfitATG2L
-    print "********************************************"
-    print "********************************************"
-    print "********************************************"
+    #print "********************************************"
+    #print "********************************************"
+    #print "********************************************"
+    #print "xHPTG2lA.shape"
+    #print xHPTG2lA.shape
+    #print "yTG2[0][0].shape"
+    #print yTG2[0][0].shape
+    #print "polyfitATG2L.shape"
+    #print polyfitATG2L.shape
+    #print "polyfitATG2L"
+    #print polyfitATG2L
+    #print "********************************************"
+    #print "********************************************"
+    #print "********************************************"
     polyfitATG2M, polyCovMATG2M =np.polyfit(xHPTG2[1],yTG2[1][0],deg=1,cov=True)
     polyfitATG2R, polyCovMATG2R=np.polyfit(xHPTG2[2],yTG2[2][0],deg=1,cov=True)
     polyfitATG2=[polyfitATG2L,polyfitATG2M,polyfitATG2R]
@@ -645,11 +645,11 @@ for i in range(2,4): ##for i in range(0,4):
 
     fitvector = [fitvector875, fitvectorTG1, fitvectorTG2]
     linspace = [linspace875, linspaceTG1, linspaceTG2]
-    print '******HORIZONAL SCAN*******'
+    #print '******HORIZONAL SCAN*******'
 
     for pm, posMon in enumerate(fitvector):
         for lm,lossMon in enumerate(posMon):
-            print 'plot['+str(lm)+','+str(pm)+'] '+ name[i]
+            #print 'plot['+str(lm)+','+str(pm)+'] '+ name[i]
             roots = []
             for sec,section in enumerate(linspace[pm]):
                 f6axarr[f][lm,pm].plot(section,lossMon[sec](section),'k-',alpha=0.5)
@@ -658,8 +658,8 @@ for i in range(2,4): ##for i in range(0,4):
                     f6axarr[f][lm,pm].plot(root[0],lossMon[sec](root[0]),'o')
                     roots.append(root[0])
 
-            print 'roots = '
-            print roots
+            #print 'roots = '
+            #print roots
 
             center = float(roots[0]+(0.5*(roots[1]-roots[0])))
             centery = float(lossMon[1](center))
@@ -884,21 +884,21 @@ for i in range(1,2): ##for i in range(0,4):
 
     fitvector = [fitvector875, fitvectorTG1, fitvectorTG2]
     linspace = [linspace875, linspaceTG1, linspaceTG2]
-    print '******VERTICAL SCAN*******'
+    #print '******VERTICAL SCAN*******'
     for pm, posMon in enumerate(fitvector):
         for lm,lossMon in enumerate(posMon):
-            print 'plot['+str(lm)+','+str(pm)+']'
+            #print 'plot['+str(lm)+','+str(pm)+']'
             roots = []
             for sec,section in enumerate(linspace[pm]):
                 f7axarr[f][lm,pm].plot(section,lossMon[sec](section),'k-',alpha=0.5)
                 if sec>0:
                     root = (lossMon[sec]-lossMon[sec-1]).roots
                     f7axarr[f][lm,pm].plot(root[0],lossMon[sec](root[0]),'o')
-                    print '    root = '+str(root[0])
+                    #print '    root = '+str(root[0])
                     roots.append(root[0])
             center = float(roots[0]+(0.5*(roots[1]-roots[0])))
             centery = float(lossMon[1](center))
-            print '        center = ' + str(center)
+            #print '        center = ' + str(center)
             #print type(center)
             #print type(centery)
             annotation_string = r"%0.2f" % (center)
@@ -928,12 +928,12 @@ np.save("TargetFits_SlugVCovM.npy",SlugVCovM)
 
 
 plt.show()
-# pp.savefig(fig2)
-# pp.savefig(fig0[0])
-# pp.savefig(fig0[1])
-# pp.savefig(fig0[2])
-# pp.savefig(fig6[0])
-# pp.savefig(fig6[1])
-# pp.savefig(fig7[0])
-# pp.close()
+pp.savefig(fig2)
+pp.savefig(fig0[0])
+pp.savefig(fig0[1])
+pp.savefig(fig0[2])
+pp.savefig(fig6[0])
+pp.savefig(fig6[1])
+pp.savefig(fig7[0])
+pp.close()
 
