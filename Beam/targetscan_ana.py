@@ -9,6 +9,7 @@ __author__ = 'miceli'
 import sys
 sys.path.insert(0, '/Users/tiamiceli/Documents/Code/PyBooNE')
 
+import cPickle as pickle
 import ROOT as rt
 import numpy as np
 import math
@@ -286,7 +287,12 @@ name = ['Regular Run ', 'Vertical Scan ', 'Horizontal Fin Scan ', 'Horizontal Sl
 ################################
 # MAKE PLOTS
 ################################
-
+FinHFits =[]
+FinHCovM =[]
+SlugHFits=[]
+SlugHCovM=[]
+SlugVFits=[]
+SlugVCovM=[]
 
 #---------------plot position vs. time---------------
 fig2, f2axarr = plt.subplots(2,2,figsize=(11,9))
@@ -491,6 +497,28 @@ for i in range(2,4): ##for i in range(0,4):
     fitvectorB875 = [np.poly1d(np.polyfit(xHP875[0],y875[0][1],deg=1)), np.poly1d(np.polyfit(xHP875[1],y875[1][1],deg=1)), np.poly1d(np.polyfit(xHP875[2],y875[2][1],deg=1))]
     fitvectorC875 = [np.poly1d(np.polyfit(xHP875[0],y875[0][2],deg=1)), np.poly1d(np.polyfit(xHP875[1],y875[1][2],deg=1)), np.poly1d(np.polyfit(xHP875[2],y875[2][2],deg=1))]
     fitvector875 = [fitvectorA875, fitvectorB875, fitvectorC875]
+
+    polyfitA875L, polyCovMA875L =np.polyfit(xHP875lA ,y875[0][0],deg=1,cov=True)
+    polyfitA875M, polyCovMA875M =np.polyfit(xHP875[1],y875[1][0],deg=1,cov=True)
+    polyfitA875R, polyCovMA875R=np.polyfit(xHP875[2],y875[2][0],deg=1,cov=True)
+    polyfitA875=[polyfitA875L,polyfitA875M,polyfitA875R]
+    polyCovMA875=[polyCovMA875L,polyCovMA875M,polyCovMA875R]
+
+    polyfitB875L, polyCovMB875L =np.polyfit(xHP875[0],y875[0][1],deg=1,cov=True)
+    polyfitB875M, polyCovMB875M =np.polyfit(xHP875[1],y875[1][1],deg=1,cov=True)
+    polyfitB875R, polyCovMB875R =np.polyfit(xHP875[2],y875[2][1],deg=1,cov=True)
+    polyfitB875 = [polyfitB875L,polyfitB875M,polyfitB875R]
+    polyCovMB875= [polyCovMB875L,polyCovMB875M,polyCovMB875R]
+
+    polyfitC875L, polyCovMC875L =np.polyfit(xHP875[0],y875[0][2],deg=1,cov=True)
+    polyfitC875M, polyCovMC875M =np.polyfit(xHP875[1],y875[1][2],deg=1,cov=True)
+    polyfitC875R, polyCovMC875R =np.polyfit(xHP875[2],y875[2][2],deg=1,cov=True)
+    polyfitC875=[polyfitC875L,polyfitC875M,polyfitC875R]
+    polyCovMC875 = [polyCovMC875L,polyCovMC875M,polyCovMC875R]
+    
+    polyfitvector875 = [polyfitA875,polyfitB875,polyfitC875]
+    polyfitCovM875= [polyCovMA875,polyCovMB875,polyCovMC875]
+
     #if i==2 #fin scan
     linspace875 = [np.linspace(-7,5,6), np.linspace(1,5,6), np.linspace(1,10,6)]
     if i==3: #slug scan
@@ -520,6 +548,30 @@ for i in range(2,4): ##for i in range(0,4):
     fitvectorBTG1 = [np.poly1d(np.polyfit(xHPTG1[0],yTG1[0][1],deg=1)), np.poly1d(np.polyfit(xHPTG1[1],yTG1[1][1],deg=1)), np.poly1d(np.polyfit(xHPTG1[2],yTG1[2][1],deg=1))]
     fitvectorCTG1 = [np.poly1d(np.polyfit(xHPTG1[0],yTG1[0][2],deg=1)), np.poly1d(np.polyfit(xHPTG1[1],yTG1[1][2],deg=1)), np.poly1d(np.polyfit(xHPTG1[2],yTG1[2][2],deg=1))]
     fitvectorTG1 = [fitvectorATG1, fitvectorBTG1, fitvectorCTG1]
+
+    
+    polyfitATG1L, polyCovMATG1L =np.polyfit(xHPTG1lA ,yTG1[0][0],deg=1,cov=True)
+    polyfitATG1M, polyCovMATG1M =np.polyfit(xHPTG1[1],yTG1[1][0],deg=1,cov=True)
+    polyfitATG1R, polyCovMATG1R=np.polyfit(xHPTG1[2],yTG1[2][0],deg=1,cov=True)
+    polyfitATG1=[polyfitATG1L,polyfitATG1M,polyfitATG1R]
+    polyCovMATG1=[polyCovMATG1L,polyCovMATG1M,polyCovMATG1R]
+
+    polyfitBTG1L, polyCovMBTG1L =np.polyfit(xHPTG1[0],yTG1[0][1],deg=1,cov=True)
+    polyfitBTG1M, polyCovMBTG1M =np.polyfit(xHPTG1[1],yTG1[1][1],deg=1,cov=True)
+    polyfitBTG1R, polyCovMBTG1R =np.polyfit(xHPTG1[2],yTG1[2][1],deg=1,cov=True)
+    polyfitBTG1 = [polyfitBTG1L,polyfitBTG1M,polyfitBTG1R]
+    polyCovMBTG1= [polyCovMBTG1L,polyCovMBTG1M,polyCovMBTG1R]
+
+    polyfitCTG1L, polyCovMCTG1L =np.polyfit(xHPTG1[0],yTG1[0][2],deg=1,cov=True)
+    polyfitCTG1M, polyCovMCTG1M =np.polyfit(xHPTG1[1],yTG1[1][2],deg=1,cov=True)
+    polyfitCTG1R, polyCovMCTG1R =np.polyfit(xHPTG1[2],yTG1[2][2],deg=1,cov=True)
+    polyfitCTG1=[polyfitCTG1L,polyfitCTG1M,polyfitCTG1R]
+    polyCovMCTG1 = [polyCovMCTG1L,polyCovMCTG1M,polyCovMCTG1R]
+    
+    polyfitvectorTG1 = [polyfitATG1,polyfitBTG1,polyfitCTG1]
+    polyfitCovMTG1= [polyCovMATG1,polyCovMBTG1,polyCovMCTG1]
+    
+
     #if i==2 #fin scan
     linspaceTG1 = [np.linspace(-7,2,6), np.linspace(-2,2,6), np.linspace(-1,7,6)]
     if i==3: #slug scan
@@ -549,6 +601,43 @@ for i in range(2,4): ##for i in range(0,4):
     fitvectorBTG2 = [np.poly1d(np.polyfit(xHPTG2[0],yTG2[0][1],deg=1)), np.poly1d(np.polyfit(xHPTG2[1],yTG2[1][1],deg=1)), np.poly1d(np.polyfit(xHPTG2[2],yTG2[2][1],deg=1))]
     fitvectorCTG2 = [np.poly1d(np.polyfit(xHPTG2[0],yTG2[0][2],deg=1)), np.poly1d(np.polyfit(xHPTG2[1],yTG2[1][2],deg=1)), np.poly1d(np.polyfit(xHPTG2[2],yTG2[2][2],deg=1))]
     fitvectorTG2 = [fitvectorATG2, fitvectorBTG2, fitvectorCTG2]
+
+    polyfitATG2L, polyCovMATG2L =np.polyfit(xHPTG2lA ,yTG2[0][0],deg=1,cov=True)
+    print "********************************************"
+    print "********************************************"
+    print "********************************************"
+    print "xHPTG2lA.shape"
+    print xHPTG2lA.shape
+    print "yTG2[0][0].shape"
+    print yTG2[0][0].shape
+    print "polyfitATG2L.shape"
+    print polyfitATG2L.shape
+    print "polyfitATG2L"
+    print polyfitATG2L
+    print "********************************************"
+    print "********************************************"
+    print "********************************************"
+    polyfitATG2M, polyCovMATG2M =np.polyfit(xHPTG2[1],yTG2[1][0],deg=1,cov=True)
+    polyfitATG2R, polyCovMATG2R=np.polyfit(xHPTG2[2],yTG2[2][0],deg=1,cov=True)
+    polyfitATG2=[polyfitATG2L,polyfitATG2M,polyfitATG2R]
+    polyCovMATG2=[polyCovMATG2L,polyCovMATG2M,polyCovMATG2R]
+
+    polyfitBTG2L, polyCovMBTG2L =np.polyfit(xHPTG2[0],yTG2[0][1],deg=1,cov=True)
+    polyfitBTG2M, polyCovMBTG2M =np.polyfit(xHPTG2[1],yTG2[1][1],deg=1,cov=True)
+    polyfitBTG2R, polyCovMBTG2R =np.polyfit(xHPTG2[2],yTG2[2][1],deg=1,cov=True)
+    polyfitBTG2 = [polyfitBTG2L,polyfitBTG2M,polyfitBTG2R]
+    polyCovMBTG2= [polyCovMBTG2L,polyCovMBTG2M,polyCovMBTG2R]
+
+    polyfitCTG2L, polyCovMCTG2L =np.polyfit(xHPTG2[0],yTG2[0][2],deg=1,cov=True)
+    polyfitCTG2M, polyCovMCTG2M =np.polyfit(xHPTG2[1],yTG2[1][2],deg=1,cov=True)
+    polyfitCTG2R, polyCovMCTG2R =np.polyfit(xHPTG2[2],yTG2[2][2],deg=1,cov=True)
+    polyfitCTG2=[polyfitCTG2L,polyfitCTG2M,polyfitCTG2R]
+    polyCovMCTG2 = [polyCovMCTG2L,polyCovMCTG2M,polyCovMCTG2R]
+
+    
+    polyfitvectorTG2 = [polyfitATG2,polyfitBTG2,polyfitCTG2]
+    polyfitCovMTG2= [polyCovMATG2,polyCovMBTG2,polyCovMCTG2]
+
     #if i==2 #fin scan
     linspaceTG2 = [np.linspace(-7,3,6), np.linspace(-1,3,6), np.linspace(-1,7,6)]
     if i==3: #slug scan
@@ -578,53 +667,13 @@ for i in range(2,4): ##for i in range(0,4):
             annotation_string = r"%0.2f" % (center)
             f6axarr[f][lm,pm].annotate(annotation_string, (center-2, centery-0.005), color='red')
 
-    # if i==2:
-    #     for pm, posMon in enumerate(fitvector):
-    #         for lm,lossMon in enumerate(posMon):
-    #             print 'plot['+str(lm)+','+str(pm)+'] '+ name[i]
-    #             roots = []
-    #             for sec,section in enumerate(linspace[pm]):
-    #                 if sec==1:
-    #                     continue
-    #                 f6axarr[f][lm,pm].plot(section,lossMon[sec](section),'k-',alpha=0.5)
-    #                 if sec==2:
-    #                     root = (lossMon[sec]-lossMon[sec-2]).roots
-    #                     f6axarr[f][lm,pm].plot(root[0],lossMon[sec](root[0]),'o')
-    #                     roots.append(root[0])
-    #
-    #             print 'roots = '
-    #             print roots
-    #
-    #             center = float(roots[0])
-    #             centery = float(lossMon[0](center))
-    #             f6axarr[f][lm,pm].plot(center,centery,'o')
-    #             annotation_string = r"%0.2f" % (center)
-    #             f6axarr[f][lm,pm].annotate(annotation_string, (center-2, centery+0.015), color='green')
-    #
-    #
-    # if i==3:
-    #     for pm, posMon in enumerate(fitvector):
-    #         for lm,lossMon in enumerate(posMon):
-    #             print 'plot['+str(lm)+','+str(pm)+'] '+ name[i]
-    #             roots = []
-    #             for sec,section in enumerate(linspace[pm]):
-    #                 f6axarr[f][lm,pm].plot(section,lossMon[sec](section),'k-',alpha=0.5)
-    #                 if sec>0:
-    #                     root = (lossMon[sec]-lossMon[sec-1]).roots
-    #                     f6axarr[f][lm,pm].plot(root[0],lossMon[sec](root[0]),'o')
-    #                     roots.append(root[0])
-    #
-    #             print 'roots = '
-    #             print roots
-    #
-    #             center = float(roots[0]+(0.5*(roots[1]-roots[0])))
-    #             centery = float(lossMon[1](center))
-    #             f6axarr[f][lm,pm].plot(center,centery,'o')
-    #             annotation_string = r"%0.2f" % (center)
-    #             f6axarr[f][lm,pm].annotate(annotation_string, (center-2, centery-0.005), color='red')
-
-
-
+    if i==2: #fin
+        FinHFits = [polyfitvector875, polyfitvectorTG1, polyfitvectorTG2]
+        FinHCovM = [polyfitCovM875, polyfitCovMTG1, polyfitCovMTG2]
+    
+    if i==3: #slug
+        SlugHFits = [polyfitvector875, polyfitvectorTG1, polyfitvectorTG2]
+        SlugHCovM = [polyfitCovM875, polyfitCovMTG1, polyfitCovMTG2]
         
     
     f=f+1
@@ -719,6 +768,27 @@ for i in range(1,2): ##for i in range(0,4):
     fitvector875 = [fitvectorA875, fitvectorB875, fitvectorC875]
     linspace875 = [np.linspace(-7,-2,6), np.linspace(-5,5,6), np.linspace(2,7,6)]
 
+    polyfitA875L, polyCovMA875L =np.polyfit(xVP875[0] ,y875[0][0],deg=1,cov=True)
+    polyfitA875M, polyCovMA875M =np.polyfit(xVP875[1],y875[1][0],deg=1,cov=True)
+    polyfitA875R, polyCovMA875R= np.polyfit(xVP875[2],y875[2][0],deg=1,cov=True)
+    polyfitA875=[polyfitA875L,polyfitA875M,polyfitA875R]
+    polyCovMA875=[polyCovMA875L,polyCovMA875M,polyCovMA875R]
+
+    polyfitB875L, polyCovMB875L =np.polyfit(xVP875[0],y875[0][1],deg=1,cov=True)
+    polyfitB875M, polyCovMB875M =np.polyfit(xVP875[1],y875[1][1],deg=1,cov=True)
+    polyfitB875R, polyCovMB875R =np.polyfit(xVP875[2],y875[2][1],deg=1,cov=True)
+    polyfitB875 = [polyfitB875L,polyfitB875M,polyfitB875R]
+    polyCovMB875= [polyCovMB875L,polyCovMB875M,polyCovMB875R]
+
+    polyfitC875L, polyCovMC875L =np.polyfit(xVP875[0],y875[0][2],deg=1,cov=True)
+    polyfitC875M, polyCovMC875M =np.polyfit(xVP875[1],y875[1][2],deg=1,cov=True)
+    polyfitC875R, polyCovMC875R =np.polyfit(xVP875[2],y875[2][2],deg=1,cov=True)
+    polyfitC875=[polyfitC875L,polyfitC875M,polyfitC875R]
+    polyCovMC875 = [polyCovMC875L,polyCovMC875M,polyCovMC875R]
+    
+    polyfitvector875 = [polyfitA875,polyfitB875,polyfitC875]
+    polyfitCovM875= [polyCovMA875,polyCovMB875,polyCovMC875]
+
     # VPTG1
     xVPTG1l  = aVPTG1[    np.where((scanType==i) & (aVPTG1>-7) & (aVPTG1<-4.25))]
     y1lTG1 = aLM875ATOR[np.where((scanType==i) & (aVPTG1>-7) & (aVPTG1<-4.25))]
@@ -744,6 +814,28 @@ for i in range(1,2): ##for i in range(0,4):
     fitvectorTG1 = [fitvectorATG1, fitvectorBTG1, fitvectorCTG1]
     linspaceTG1 = [np.linspace(-7,-2,6), np.linspace(-5,5,6), np.linspace(0,7,6)]
 
+    polyfitATG1L, polyCovMATG1L =np.polyfit(xVPTG1[0] ,yTG1[0][0],deg=1,cov=True)
+    polyfitATG1M, polyCovMATG1M =np.polyfit(xVPTG1[1],yTG1[1][0],deg=1,cov=True)
+    polyfitATG1R, polyCovMATG1R= np.polyfit(xVPTG1[2],yTG1[2][0],deg=1,cov=True)
+    polyfitATG1=[polyfitATG1L,polyfitATG1M,polyfitATG1R]
+    polyCovMATG1=[polyCovMATG1L,polyCovMATG1M,polyCovMATG1R]
+
+    polyfitBTG1L, polyCovMBTG1L =np.polyfit(xVPTG1[0],yTG1[0][1],deg=1,cov=True)
+    polyfitBTG1M, polyCovMBTG1M =np.polyfit(xVPTG1[1],yTG1[1][1],deg=1,cov=True)
+    polyfitBTG1R, polyCovMBTG1R =np.polyfit(xVPTG1[2],yTG1[2][1],deg=1,cov=True)
+    polyfitBTG1 = [polyfitBTG1L,polyfitBTG1M,polyfitBTG1R]
+    polyCovMBTG1= [polyCovMBTG1L,polyCovMBTG1M,polyCovMBTG1R]
+
+    polyfitCTG1L, polyCovMCTG1L =np.polyfit(xVPTG1[0],yTG1[0][2],deg=1,cov=True)
+    polyfitCTG1M, polyCovMCTG1M =np.polyfit(xVPTG1[1],yTG1[1][2],deg=1,cov=True)
+    polyfitCTG1R, polyCovMCTG1R =np.polyfit(xVPTG1[2],yTG1[2][2],deg=1,cov=True)
+    polyfitCTG1=[polyfitCTG1L,polyfitCTG1M,polyfitCTG1R]
+    polyCovMCTG1 = [polyCovMCTG1L,polyCovMCTG1M,polyCovMCTG1R]
+   
+    polyfitvectorTG1 = [polyfitATG1,polyfitBTG1,polyfitCTG1]
+    polyfitCovMTG1= [polyCovMATG1,polyCovMBTG1,polyCovMCTG1]
+
+
     # VPTG2
     xVPTG2l  = aVPTG2[    np.where((scanType==i) & (aVPTG2>-6) & (aVPTG2<-4))]
     y1lTG2 = aLM875ATOR[np.where((scanType==i) & (aVPTG2>-6) & (aVPTG2<-4))]
@@ -768,6 +860,27 @@ for i in range(1,2): ##for i in range(0,4):
     fitvectorCTG2 = [np.poly1d(np.polyfit(xVPTG2[0],yTG2[0][2],deg=1)), np.poly1d(np.polyfit(xVPTG2[1],yTG2[1][2],deg=1)), np.poly1d(np.polyfit(xVPTG2[2],yTG2[2][2],deg=1))]
     fitvectorTG2 = [fitvectorATG2, fitvectorBTG2, fitvectorCTG2]
     linspaceTG2 = [np.linspace(-7,-2,6), np.linspace(-5,5,6), np.linspace(2,7,6)]
+    
+    polyfitATG2L, polyCovMATG2L =np.polyfit(xVPTG2[0] ,yTG2[0][0],deg=1,cov=True)
+    polyfitATG2M, polyCovMATG2M =np.polyfit(xVPTG2[1],yTG2[1][0],deg=1,cov=True)
+    polyfitATG2R, polyCovMATG2R= np.polyfit(xVPTG2[2],yTG2[2][0],deg=1,cov=True)
+    polyfitATG2=[polyfitATG2L,polyfitATG2M,polyfitATG2R]
+    polyCovMATG2=[polyCovMATG2L,polyCovMATG2M,polyCovMATG2R]
+
+    polyfitBTG2L, polyCovMBTG2L =np.polyfit(xVPTG2[0],yTG2[0][1],deg=1,cov=True)
+    polyfitBTG2M, polyCovMBTG2M =np.polyfit(xVPTG2[1],yTG2[1][1],deg=1,cov=True)
+    polyfitBTG2R, polyCovMBTG2R =np.polyfit(xVPTG2[2],yTG2[2][1],deg=1,cov=True)
+    polyfitBTG2 = [polyfitBTG2L,polyfitBTG2M,polyfitBTG2R]
+    polyCovMBTG2= [polyCovMBTG2L,polyCovMBTG2M,polyCovMBTG2R]
+
+    polyfitCTG2L, polyCovMCTG2L =np.polyfit(xVPTG2[0],yTG2[0][2],deg=1,cov=True)
+    polyfitCTG2M, polyCovMCTG2M =np.polyfit(xVPTG2[1],yTG2[1][2],deg=1,cov=True)
+    polyfitCTG2R, polyCovMCTG2R =np.polyfit(xVPTG2[2],yTG2[2][2],deg=1,cov=True)
+    polyfitCTG2=[polyfitCTG2L,polyfitCTG2M,polyfitCTG2R]
+    polyCovMCTG2 = [polyCovMCTG2L,polyCovMCTG2M,polyCovMCTG2R]
+    
+    polyfitvectorTG2 = [polyfitATG2,polyfitBTG2,polyfitCTG2]
+    polyfitCovMTG2= [polyCovMATG2,polyCovMBTG2,polyCovMCTG2]
 
     fitvector = [fitvector875, fitvectorTG1, fitvectorTG2]
     linspace = [linspace875, linspaceTG1, linspaceTG2]
@@ -792,8 +905,26 @@ for i in range(1,2): ##for i in range(0,4):
             f7axarr[f][lm,pm].plot(center,centery,'o')
             f7axarr[f][lm,pm].annotate(annotation_string, (center-2, centery-0.005), color='red')
 
+    SlugVFits=[polyfitvector875,polyfitvectorTG1,polyfitvectorTG2]
+    SlugVCovM=[polyfitCovM875,polyfitCovMTG1,polyfitCovMTG2]
 
     f=f+1
+
+#Save fits for analysis:
+np.save("TargetFits_FinHFits.npy",FinHFits)
+np.save("TargetFits_FinHCovM.npy",FinHCovM)
+np.save("TargetFits_SlugHFits.npy",SlugHFits)
+np.save("TargetFits_SlugHCovM.npy",SlugHCovM)
+np.save("TargetFits_SlugVFits.npy",SlugVFits)
+np.save("TargetFits_SlugVCovM.npy",SlugVCovM)
+#filename = "TargetFits.pickle"
+#with open(filename,'w') as f:
+#    pickle.dump(FinHFits,f)
+#    pickle.dump(FinHCovM,f)
+#    pickle.dump(SlugHFits,f)
+#    pickle.dump(SlugHCovM,f)
+#    pickle.dump(SlugVFits,f)
+#    pickle.dump(SlugVCovM,f)
 
 
 plt.show()
