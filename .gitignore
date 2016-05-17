@@ -1,0 +1,5 @@
+*.pickle
+*.npy
+*.pyc
+*.pdf
+*.ipynb
