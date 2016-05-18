@@ -293,6 +293,12 @@ SlugHFits=[]
 SlugHCovM=[]
 SlugVFits=[]
 SlugVCovM=[]
+FinHMWFits =[]
+FinHMWCovM =[]
+SlugHMWFits=[]
+SlugHMWCovM=[]
+SlugVMWFits=[]
+SlugVMWCovM=[]
 
 #---------------plot position vs. time---------------
 fig2, f2axarr = plt.subplots(2,2,figsize=(11,9))

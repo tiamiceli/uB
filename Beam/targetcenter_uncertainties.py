@@ -56,6 +56,7 @@ axarr = [axarrFinH, axarrSlugH, axarrSlugV]
 
 bs=0
 for beamScan,beamScanCov in zip(TargetFits,TargetCovM):
+
     #print 'beamScan '+str(bs)
     fig[bs].subplots_adjust(left=0.1, bottom=0.1, top=0.92, wspace=0.3, hspace=0.3)
 
@@ -136,7 +137,7 @@ for beamScan,beamScanCov in zip(TargetFits,TargetCovM):
 
 
 plt.show()
-#pp.savefig(fig[0])
-#pp.savefig(fig[1])
-#pp.savefig(fig[2])
-#pp.close()
+pp.savefig(fig[0])
+pp.savefig(fig[1])
+pp.savefig(fig[2])
+pp.close()
