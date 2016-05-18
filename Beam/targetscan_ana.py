@@ -345,53 +345,53 @@ f2axarr[1,1].add_patch(pat.Rectangle([500000,4.47],225000,0.2,fill=False,ec='red
 fig2.text(0.2,0.97, 'Positions and Times at HPTG2 and VPTG2 & no missing info', size='large')
 
 #---------------plot vertical position vs. beam line position---------------
-fig0_0, a0_0 = plt.subplots(1,2,figsize=(10,6))
-fig0_1, a0_1 = plt.subplots(1,2,figsize=(10,6))
-fig0_2, a0_2 = plt.subplots(1,2,figsize=(10,6))
-#fig0_3, a0_3 = plt.subplots(1,2,figsize=(10,6))
-fig0 = [fig0_0, fig0_1, fig0_2]#, fig0_3]
-a0 = [a0_0, a0_1, a0_2]#, a0_3]
-
-f=0
-for i in range(1,4):
-    fig0[f].subplots_adjust(right=0.8)
-    a0[f][0].scatter(aVP860[np.where(scanType==i)], location['VP860'][0] * np.ones(len(aVP860[np.where(scanType==i)])), c='firebrick', alpha=0.4, lw=0, label='VP860')
-    a0[f][0].scatter(aVP861[np.where(scanType==i)], location['VP861'][0] * np.ones(len(aVP861[np.where(scanType==i)])), c='red', alpha=0.4, lw=0, label='VP861')
-    a0[f][0].scatter(aVP864[np.where(scanType==i)], location['VP864'][0] * np.ones(len(aVP864[np.where(scanType==i)])), c='orange', alpha=0.4, lw=0, label='VP864')
-    a0[f][0].scatter(aVP867[np.where(scanType==i)], location['VP867'][0] * np.ones(len(aVP867[np.where(scanType==i)])), c='gold', alpha=0.4, lw=0, label='VP867')
-    a0[f][0].scatter(aVP869[np.where(scanType==i)], location['VP869'][0] * np.ones(len(aVP869[np.where(scanType==i)])), c='lawngreen', alpha=0.4, lw=0, label='VP869')
-    a0[f][0].scatter(aVP870[np.where(scanType==i)], location['VP870'][0] * np.ones(len(aVP870[np.where(scanType==i)])), c='green', alpha=0.4, lw=0, label='VP870')
-    a0[f][0].scatter(aVP871[np.where(scanType==i)], location['VP871'][0] * np.ones(len(aVP871[np.where(scanType==i)])), c='teal', alpha=0.4, lw=0, label='VP871')
-    a0[f][0].scatter(aVP873[np.where(scanType==i)], location['VP873'][0] * np.ones(len(aVP873[np.where(scanType==i)])), c='blue', alpha=0.4, lw=0, label='VP873')
-    a0[f][0].scatter(aVP875[np.where(scanType==i)], location['VP875'][0] * np.ones(len(aVP875[np.where(scanType==i)])), c='violet', alpha=0.4, lw=0, label='VP875')
-    a0[f][0].scatter(aVPTG1[np.where(scanType==i)], location['VPTG1'][0] * np.ones(len(aVPTG1[np.where(scanType==i)])), c='purple', alpha=0.4, lw=0, label='VPTG1')
-    a0[f][0].scatter(aVPTG2[np.where(scanType==i)], location['VPTG2'][0] * np.ones(len(aVPTG2[np.where(scanType==i)])), c='magenta', alpha=0.4, lw=0, label='VPTG2')
-    a0[f][0].minorticks_on()
-    a0[f][0].grid(True)
-
-    a0[f][0].set_xlabel('Vertical Position (mm)')
-    a0[f][0].set_ylabel('Longitudinal Position (m)')
-    fig0[f].text(0.3,0.97, name[i]+'Beam Position v. Longitudinal Position', size='large')
-    #a0[f].ticklabel_format(style='sci', axis='x', scilimits=(0,0))
-
-    a0[f][1].scatter((aHP860[np.where(scanType==i)]), location['HP860'][0] * np.ones(len(aHP860[np.where(scanType==i)])), c='firebrick', alpha=0.4, lw=0, label='HP860')
-    a0[f][1].scatter(aHP861[np.where(scanType==i)], location['HP861'][0] * np.ones(len(aHP861[np.where(scanType==i)])), c='red', alpha=0.4, lw=0, label='HP861')
-    a0[f][1].scatter(aHP864[np.where(scanType==i)], location['HP864'][0] * np.ones(len(aHP864[np.where(scanType==i)])), c='orange', alpha=0.4, lw=0, label='HP864')
-    a0[f][1].scatter(aHP866[np.where(scanType==i)], location['HP866'][0] * np.ones(len(aHP866[np.where(scanType==i)])), c='gold', alpha=0.4, lw=0, label='HP866')
-    a0[f][1].scatter(aHP868[np.where(scanType==i)], location['HP868'][0] * np.ones(len(aHP868[np.where(scanType==i)])), c='lawngreen', alpha=0.4, lw=0, label='HP868')
-    a0[f][1].scatter(aHP870[np.where(scanType==i)], location['HP870'][0] * np.ones(len(aHP870[np.where(scanType==i)])), c='green', alpha=0.4, lw=0, label='HP870')
-    a0[f][1].scatter(aHP872[np.where(scanType==i)], location['HP872'][0] * np.ones(len(aHP872[np.where(scanType==i)])), c='teal', alpha=0.4, lw=0, label='HP872')
-    a0[f][1].scatter(aHP873[np.where(scanType==i)], location['HP873'][0] * np.ones(len(aHP873[np.where(scanType==i)])), c='blue', alpha=0.4, lw=0, label='HP873')
-    a0[f][1].scatter(aHP875[np.where(scanType==i)], location['HP875'][0] * np.ones(len(aHP875[np.where(scanType==i)])), c='violet', alpha=0.4, lw=0, label='HP875\'')
-    a0[f][1].scatter(aHPTG1[np.where(scanType==i)], location['HPTG1'][0] * np.ones(len(aHPTG1[np.where(scanType==i)])), c='purple', alpha=0.4, lw=0, label='HPTG1')
-    a0[f][1].scatter(aHPTG2[np.where(scanType==i)], location['HPTG2'][0] * np.ones(len(aHPTG2[np.where(scanType==i)])), c='magenta', alpha=0.4, lw=0, label='HPTG2')
-    a0[f][1].minorticks_on()
-    a0[f][1].grid(True)
-
-    a0[f][1].set_xlabel('Horizontal Position (mm)')
-    a0[f][1].set_ylabel('Longitudinal Position (m)')
-    a0[f][1].legend(loc='center right' ,bbox_to_anchor=(0.98,0.5), bbox_transform=fig0[f].transFigure, scatterpoints=1)
-    f=f+1
+# fig0_0, a0_0 = plt.subplots(1,2,figsize=(10,6))
+# fig0_1, a0_1 = plt.subplots(1,2,figsize=(10,6))
+# fig0_2, a0_2 = plt.subplots(1,2,figsize=(10,6))
+# #fig0_3, a0_3 = plt.subplots(1,2,figsize=(10,6))
+# fig0 = [fig0_0, fig0_1, fig0_2]#, fig0_3]
+# a0 = [a0_0, a0_1, a0_2]#, a0_3]
+#
+# f=0
+# for i in range(1,4):
+#     fig0[f].subplots_adjust(right=0.8)
+#     a0[f][0].scatter(aVP860[np.where(scanType==i)], location['VP860'][0] * np.ones(len(aVP860[np.where(scanType==i)])), c='firebrick', alpha=0.4, lw=0, label='VP860')
+#     a0[f][0].scatter(aVP861[np.where(scanType==i)], location['VP861'][0] * np.ones(len(aVP861[np.where(scanType==i)])), c='red', alpha=0.4, lw=0, label='VP861')
+#     a0[f][0].scatter(aVP864[np.where(scanType==i)], location['VP864'][0] * np.ones(len(aVP864[np.where(scanType==i)])), c='orange', alpha=0.4, lw=0, label='VP864')
+#     a0[f][0].scatter(aVP867[np.where(scanType==i)], location['VP867'][0] * np.ones(len(aVP867[np.where(scanType==i)])), c='gold', alpha=0.4, lw=0, label='VP867')
+#     a0[f][0].scatter(aVP869[np.where(scanType==i)], location['VP869'][0] * np.ones(len(aVP869[np.where(scanType==i)])), c='lawngreen', alpha=0.4, lw=0, label='VP869')
+#     a0[f][0].scatter(aVP870[np.where(scanType==i)], location['VP870'][0] * np.ones(len(aVP870[np.where(scanType==i)])), c='green', alpha=0.4, lw=0, label='VP870')
+#     a0[f][0].scatter(aVP871[np.where(scanType==i)], location['VP871'][0] * np.ones(len(aVP871[np.where(scanType==i)])), c='teal', alpha=0.4, lw=0, label='VP871')
+#     a0[f][0].scatter(aVP873[np.where(scanType==i)], location['VP873'][0] * np.ones(len(aVP873[np.where(scanType==i)])), c='blue', alpha=0.4, lw=0, label='VP873')
+#     a0[f][0].scatter(aVP875[np.where(scanType==i)], location['VP875'][0] * np.ones(len(aVP875[np.where(scanType==i)])), c='violet', alpha=0.4, lw=0, label='VP875')
+#     a0[f][0].scatter(aVPTG1[np.where(scanType==i)], location['VPTG1'][0] * np.ones(len(aVPTG1[np.where(scanType==i)])), c='purple', alpha=0.4, lw=0, label='VPTG1')
+#     a0[f][0].scatter(aVPTG2[np.where(scanType==i)], location['VPTG2'][0] * np.ones(len(aVPTG2[np.where(scanType==i)])), c='magenta', alpha=0.4, lw=0, label='VPTG2')
+#     a0[f][0].minorticks_on()
+#     a0[f][0].grid(True)
+#
+#     a0[f][0].set_xlabel('Vertical Position (mm)')
+#     a0[f][0].set_ylabel('Longitudinal Position (m)')
+#     fig0[f].text(0.3,0.97, name[i]+'Beam Position v. Longitudinal Position', size='large')
+#     #a0[f].ticklabel_format(style='sci', axis='x', scilimits=(0,0))
+#
+#     a0[f][1].scatter((aHP860[np.where(scanType==i)]), location['HP860'][0] * np.ones(len(aHP860[np.where(scanType==i)])), c='firebrick', alpha=0.4, lw=0, label='HP860')
+#     a0[f][1].scatter(aHP861[np.where(scanType==i)], location['HP861'][0] * np.ones(len(aHP861[np.where(scanType==i)])), c='red', alpha=0.4, lw=0, label='HP861')
+#     a0[f][1].scatter(aHP864[np.where(scanType==i)], location['HP864'][0] * np.ones(len(aHP864[np.where(scanType==i)])), c='orange', alpha=0.4, lw=0, label='HP864')
+#     a0[f][1].scatter(aHP866[np.where(scanType==i)], location['HP866'][0] * np.ones(len(aHP866[np.where(scanType==i)])), c='gold', alpha=0.4, lw=0, label='HP866')
+#     a0[f][1].scatter(aHP868[np.where(scanType==i)], location['HP868'][0] * np.ones(len(aHP868[np.where(scanType==i)])), c='lawngreen', alpha=0.4, lw=0, label='HP868')
+#     a0[f][1].scatter(aHP870[np.where(scanType==i)], location['HP870'][0] * np.ones(len(aHP870[np.where(scanType==i)])), c='green', alpha=0.4, lw=0, label='HP870')
+#     a0[f][1].scatter(aHP872[np.where(scanType==i)], location['HP872'][0] * np.ones(len(aHP872[np.where(scanType==i)])), c='teal', alpha=0.4, lw=0, label='HP872')
+#     a0[f][1].scatter(aHP873[np.where(scanType==i)], location['HP873'][0] * np.ones(len(aHP873[np.where(scanType==i)])), c='blue', alpha=0.4, lw=0, label='HP873')
+#     a0[f][1].scatter(aHP875[np.where(scanType==i)], location['HP875'][0] * np.ones(len(aHP875[np.where(scanType==i)])), c='violet', alpha=0.4, lw=0, label='HP875\'')
+#     a0[f][1].scatter(aHPTG1[np.where(scanType==i)], location['HPTG1'][0] * np.ones(len(aHPTG1[np.where(scanType==i)])), c='purple', alpha=0.4, lw=0, label='HPTG1')
+#     a0[f][1].scatter(aHPTG2[np.where(scanType==i)], location['HPTG2'][0] * np.ones(len(aHPTG2[np.where(scanType==i)])), c='magenta', alpha=0.4, lw=0, label='HPTG2')
+#     a0[f][1].minorticks_on()
+#     a0[f][1].grid(True)
+#
+#     a0[f][1].set_xlabel('Horizontal Position (mm)')
+#     a0[f][1].set_ylabel('Longitudinal Position (m)')
+#     a0[f][1].legend(loc='center right' ,bbox_to_anchor=(0.98,0.5), bbox_transform=fig0[f].transFigure, scatterpoints=1)
+#     f=f+1
 
 #---------------plot Loss vs. horizontal beam position ---------------
 fig6_1, f6axarr_1 = plt.subplots(3,4,figsize=(11,9),sharex=True,sharey=True)
@@ -687,9 +687,6 @@ fig7_1, f7axarr_1 = plt.subplots(3,4,figsize=(11,9),sharex=True,sharey=True)
 fig7 = [fig7_1]#, fig7_2, fig7_3, fig7_4]
 f7axarr = [f7axarr_1]#, f7axarr_2, f7axarr_3, f7axarr_4]
 
-#plt.subplots_adjust(right=0.8)
-#plt.minorticks_on()
-
 f=0
 for i in range(1,2): ##for i in range(0,4):
     f7axarr[f][0,3].set_ylim(0,0.04)
@@ -910,13 +907,551 @@ for i in range(1,2): ##for i in range(0,4):
 
     f=f+1
 
+#---------------plot Loss vs. horizontal MW beam position ---------------
+fig8_1, f8axarr_1 = plt.subplots(3,4,figsize=(11,9),sharex=True,sharey=True)
+fig8_2, f8axarr_2 = plt.subplots(3,4,figsize=(11,9),sharex=True,sharey=True)
+#fig8_3, f8axarr_3 = plt.subplots(3,4,figsize=(11,9),sharex=True,sharey=True)
+#fig8_4, f8axarr_4 = plt.subplots(3,4,figsize=(11,9),sharex=True,sharey=True)
+
+fig8 = [fig8_1, fig8_2]#, fig8_3, fig8_4]
+f8axarr = [f8axarr_1, f8axarr_2]#, f8axarr_3, f8axarr_4]
+#plt.subplots_adjust(right=0.8)
+#plt.minorticks_on()
+f=0
+for i in range(2,4): ##for i in range(0,4):
+    #i==2
+    f8axarr[f][0,3].set_ylim(0,0.025)
+    f8axarr[f][0,3].set_xlim(-7,5)
+    if i==3:
+        f8axarr[f][0,3].set_ylim(0,0.04)
+        f8axarr[f][0,3].set_xlim(-10,8)
+
+    f8axarr[f][0,3].scatter(aM875BB_mean_x[np.where(scanType==i)], aLM875ATOR[np.where(scanType==i)], c='firebrick'  , alpha=0.1, lw=0, label='LM875A')
+    f8axarr[f][0,3].scatter(aM876BB_mean_x[np.where(scanType==i)], aLM875ATOR[np.where(scanType==i)], c='orange'     , alpha=0.1, lw=0, label='LM875A')
+    f8axarr[f][0,3].scatter(aMMBTBB_mean_x[np.where(scanType==i)], aLM875ATOR[np.where(scanType==i)], c='steelblue'  , alpha=0.1, lw=0, label='LM875A')
+    f8axarr[f][0,0].scatter(aM875BB_mean_x[np.where(scanType==i)], aLM875ATOR[np.where(scanType==i)], c='firebrick'  , alpha=0.1, lw=0, label='LM875A')
+    f8axarr[f][0,1].scatter(aM876BB_mean_x[np.where(scanType==i)], aLM875ATOR[np.where(scanType==i)], c='orange'     , alpha=0.1, lw=0, label='LM875A')
+    f8axarr[f][0,2].scatter(aMMBTBB_mean_x[np.where(scanType==i)], aLM875ATOR[np.where(scanType==i)], c='steelblue'  , alpha=0.1, lw=0, label='LM875A')
+
+    f8axarr[f][1,3].scatter(aM875BB_mean_x[np.where(scanType==i)], aLM875BTOR[np.where(scanType==i)], c='firebrick'  , alpha=0.1, lw=0, label='LM875B')
+    f8axarr[f][1,3].scatter(aM876BB_mean_x[np.where(scanType==i)], aLM875BTOR[np.where(scanType==i)], c='orange'     , alpha=0.1, lw=0, label='LM875B')
+    f8axarr[f][1,3].scatter(aMMBTBB_mean_x[np.where(scanType==i)], aLM875BTOR[np.where(scanType==i)], c='steelblue'  , alpha=0.1, lw=0, label='LM875B')
+    f8axarr[f][1,0].scatter(aM875BB_mean_x[np.where(scanType==i)], aLM875BTOR[np.where(scanType==i)], c='firebrick'  , alpha=0.1, lw=0, label='LM875B')
+    f8axarr[f][1,1].scatter(aM876BB_mean_x[np.where(scanType==i)], aLM875BTOR[np.where(scanType==i)], c='orange'     , alpha=0.1, lw=0, label='LM875B')
+    f8axarr[f][1,2].scatter(aMMBTBB_mean_x[np.where(scanType==i)], aLM875BTOR[np.where(scanType==i)], c='steelblue'  , alpha=0.1, lw=0, label='LM875B')
+
+    f8axarr[f][2,3].scatter(aM875BB_mean_x[np.where(scanType==i)], aLM875CTOR[np.where(scanType==i)], c='firebrick'  , alpha=0.1, lw=0, label='LM875C')
+    f8axarr[f][2,3].scatter(aM876BB_mean_x[np.where(scanType==i)], aLM875CTOR[np.where(scanType==i)], c='orange'     , alpha=0.1, lw=0, label='LM875C')
+    f8axarr[f][2,3].scatter(aMMBTBB_mean_x[np.where(scanType==i)], aLM875CTOR[np.where(scanType==i)], c='steelblue'  , alpha=0.1, lw=0, label='LM875C')
+    f8axarr[f][2,0].scatter(aM875BB_mean_x[np.where(scanType==i)], aLM875CTOR[np.where(scanType==i)], c='firebrick'  , alpha=0.1, lw=0, label='LM875C')
+    f8axarr[f][2,1].scatter(aM876BB_mean_x[np.where(scanType==i)], aLM875CTOR[np.where(scanType==i)], c='orange'     , alpha=0.1, lw=0, label='LM875C')
+    f8axarr[f][2,2].scatter(aMMBTBB_mean_x[np.where(scanType==i)], aLM875CTOR[np.where(scanType==i)], c='steelblue'  , alpha=0.1, lw=0, label='LM875C')
+
+    f8axarr[f][0,0].set_ylabel('LM875A')
+    f8axarr[f][1,0].set_ylabel('LM875B')
+    f8axarr[f][2,0].set_ylabel('LM875C')
+    f8axarr[f][0,0].set_title('MW875x')
+    f8axarr[f][0,1].set_title('MW876x')
+    f8axarr[f][0,2].set_title('MWMBTx')
+    f8axarr[f][0,3].set_title('overlay')
+
+#    f8axarr[f][2,3].legend(loc='center right',bbox_to_anchor=(0.99,0.5),bbox_transform=plt.gcf().transFigure, scatterpoints=1)
+
+    #fig8.tight_layout()
+    fig8[f].subplots_adjust(left=0.1, bottom=0.1, top=0.92, wspace=0.3, hspace=0.3)
+
+    fig8[f].text(0.5, 0.04, 'Position (Horizontal) (mm)', ha='center', size='large')
+    fig8[f].text(0.015, 0.5, 'Loss/TOR875 (a.u.)', va='center', rotation='vertical', size='large')
+    fig8[f].text(0.3,0.97, name[i]+'Loss/TOR875 v. Horizontal MW Position', size='large')
+    
+    for l in range(0,3):
+        for j in range(0,4):
+
+            #f8axarr[f][l,j].ticklabel_format(style='sci', axis='x', scilimits=(0,0))
+            f8axarr[f][l,j].grid(True)
+
+    ################
+    #  FIT  LINES  #
+    ################
+    #i==2 #fin scan
+    firstCol= [-5.75,-2.5,   -2.5,-1,   -1,0.5      ]
+    firstColA=[firstCol[0],firstCol[1],firstCol[2],firstCol[3],firstCol[4],2]
+    secondCol=[-5,-1.5, -1.5,-0.5,     0,1  ]
+    secondColA=[secondCol[0],secondCol[1],secondCol[2],0,secondCol[4],2.25]
+    thirdCol= [-2,0.2,  0.2,1,     1,2  ]
+    thirdColA= [thirdCol[0],thirdCol[1],thirdCol[2],0.75,thirdCol[4],3]
+    if i==3: #slug scan
+        firstCol= [-8,-7,   -6,2,   3.5,5]
+        firstColA=[-8.5,firstCol[1],firstCol[2],firstCol[3],4,7]
+        secondCol=[-7.5,-6, -5,3,     3.5,5  ]
+        secondColA=[secondCol[0],secondCol[1],secondCol[2],secondCol[3],4,7]
+        thirdCol= [-5,-4,  -3,3,     3.5,5  ]
+        thirdColA= [-6,-4,thirdCol[2],thirdCol[3],4,6]
+    
+    
+    
+    # HP875
+    xHP875l  = aM875BB_mean_x[  np.where((scanType==i) & (aM875BB_mean_x>firstCol[0]) & (aM875BB_mean_x<firstCol[1]))]
+    xHP875lA = aM875BB_mean_x[  np.where((scanType==i) & (aM875BB_mean_x>firstColA[0]) & (aM875BB_mean_x<firstColA[1]))]
+    y1l875 = aLM875ATOR[np.where((scanType==i) & (aM875BB_mean_x>firstColA[0]) & (aM875BB_mean_x<firstColA[1]))]
+    y2l875 = aLM875BTOR[np.where((scanType==i) & (aM875BB_mean_x>firstCol[0]) & (aM875BB_mean_x<firstCol[1]))]
+    y3l875 = aLM875CTOR[np.where((scanType==i) & (aM875BB_mean_x>firstCol[0]) & (aM875BB_mean_x<firstCol[1]))]
+    yl875 = [y1l875, y2l875, y3l875]
+    xHP875t  = aM875BB_mean_x[  np.where((scanType==i) & (aM875BB_mean_x>firstCol[2]) & (aM875BB_mean_x<firstCol[3]))]
+    xHP875tA  = aM875BB_mean_x[  np.where((scanType==i) & (aM875BB_mean_x>firstColA[2]) & (aM875BB_mean_x<firstColA[3]))]
+    y1t875 = aLM875ATOR[np.where((scanType==i) & (aM875BB_mean_x>firstColA[2]) & (aM875BB_mean_x<firstColA[3]))]
+    y2t875 = aLM875BTOR[np.where((scanType==i) & (aM875BB_mean_x>firstCol[2]) & (aM875BB_mean_x<firstCol[3]))]
+    y3t875 = aLM875CTOR[np.where((scanType==i) & (aM875BB_mean_x>firstCol[2]) & (aM875BB_mean_x<firstCol[3]))]
+    yt875 = [y1t875, y2t875, y3t875]
+    xHP875r  = aM875BB_mean_x[  np.where((scanType==i) & (aM875BB_mean_x>firstCol[4]) & (aM875BB_mean_x<firstCol[5]))]
+    xHP875rA  = aM875BB_mean_x[  np.where((scanType==i) & (aM875BB_mean_x>firstColA[4]) & (aM875BB_mean_x<firstColA[5]))]
+    y1r875 = aLM875ATOR[np.where((scanType==i) & (aM875BB_mean_x>firstColA[4]) & (aM875BB_mean_x<firstColA[5]))]
+    y2r875 = aLM875BTOR[np.where((scanType==i) & (aM875BB_mean_x>firstCol[4]) & (aM875BB_mean_x<firstCol[5]))]
+    y3r875 = aLM875CTOR[np.where((scanType==i) & (aM875BB_mean_x>firstCol[4]) & (aM875BB_mean_x<firstCol[5]))]
+    yr875 = [y1r875, y2r875, y3r875]
+    xHP875 = [xHP875l, xHP875t, xHP875r]
+    xHP875A = [xHP875lA, xHP875tA, xHP875rA]
+    y875 = [yl875, yt875, yr875]
+    #
+    # print "********************************************"
+    # print "********************************************"
+    # print "********************************************"
+    # print "xHP875lA.shape"
+    # print xHP875lA.shape
+    # print "xHP875[1].shape"
+    # print xHP875[1].shape
+    # print "xHP875[2].shape"
+    # print xHP875[2].shape
+    # print "********************************************"
+    # print "********************************************"
+    # print "********************************************"
+    
+    fitvectorA875 = [np.poly1d(np.polyfit(xHP875A[0] ,y875[0][0],deg=1)), np.poly1d(np.polyfit(xHP875A[1],y875[1][0],deg=1)), np.poly1d(np.polyfit(xHP875A[2],y875[2][0],deg=1))]
+    fitvectorB875 = [np.poly1d(np.polyfit(xHP875[0],y875[0][1],deg=1)), np.poly1d(np.polyfit(xHP875[1],y875[1][1],deg=1)), np.poly1d(np.polyfit(xHP875[2],y875[2][1],deg=1))]
+    fitvectorC875 = [np.poly1d(np.polyfit(xHP875[0],y875[0][2],deg=1)), np.poly1d(np.polyfit(xHP875[1],y875[1][2],deg=1)), np.poly1d(np.polyfit(xHP875[2],y875[2][2],deg=1))]
+    fitvector875 = [fitvectorA875, fitvectorB875, fitvectorC875]
+    
+    polyfitA875L, polyCovMA875L =np.polyfit(xHP875A[0] ,y875[0][0],deg=1,cov=True)
+    polyfitA875M, polyCovMA875M =np.polyfit(xHP875A[1],y875[1][0],deg=1,cov=True)
+    polyfitA875R, polyCovMA875R=np.polyfit(xHP875A[2],y875[2][0],deg=1,cov=True)
+    polyfitA875=[polyfitA875L,polyfitA875M,polyfitA875R]
+    polyCovMA875=[polyCovMA875L,polyCovMA875M,polyCovMA875R]
+    
+    polyfitB875L, polyCovMB875L =np.polyfit(xHP875[0],y875[0][1],deg=1,cov=True)
+    polyfitB875M, polyCovMB875M =np.polyfit(xHP875[1],y875[1][1],deg=1,cov=True)
+    polyfitB875R, polyCovMB875R =np.polyfit(xHP875[2],y875[2][1],deg=1,cov=True)
+    polyfitB875 = [polyfitB875L,polyfitB875M,polyfitB875R]
+    polyCovMB875= [polyCovMB875L,polyCovMB875M,polyCovMB875R]
+    
+    polyfitC875L, polyCovMC875L =np.polyfit(xHP875[0],y875[0][2],deg=1,cov=True)
+    polyfitC875M, polyCovMC875M =np.polyfit(xHP875[1],y875[1][2],deg=1,cov=True)
+    polyfitC875R, polyCovMC875R =np.polyfit(xHP875[2],y875[2][2],deg=1,cov=True)
+    polyfitC875=[polyfitC875L,polyfitC875M,polyfitC875R]
+    polyCovMC875 = [polyCovMC875L,polyCovMC875M,polyCovMC875R]
+    
+    polyfitvector875 = [polyfitA875,polyfitB875,polyfitC875]
+    polyfitCovM875= [polyCovMA875,polyCovMB875,polyCovMC875]
+    
+    #if i==2 #fin scan
+    linspace875 = [np.linspace(-10,3,6), np.linspace(-5,5,6), np.linspace(-3,10,6)]
+    if i==3: #slug scan
+        linspace875 = [np.linspace(-10,0,6), np.linspace(-10,10,6), np.linspace(0,10,6)]
+    
+    # HPTG1
+    xHPTG1l  = aM876BB_mean_x[  np.where((scanType==i) & (aM876BB_mean_x>secondCol[0]) & (aM876BB_mean_x<secondCol[1]))]
+    xHPTG1lA  = aM876BB_mean_x[  np.where((scanType==i) & (aM876BB_mean_x>secondColA[0]) & (aM876BB_mean_x<secondColA[1]))]
+    y1lTG1 = aLM875ATOR[np.where((scanType==i) & (aM876BB_mean_x>secondColA[0]) & (aM876BB_mean_x<secondColA[1]))]
+    y2lTG1 = aLM875BTOR[np.where((scanType==i) & (aM876BB_mean_x>secondCol[0]) & (aM876BB_mean_x<secondCol[1]))]
+    y3lTG1 = aLM875CTOR[np.where((scanType==i) & (aM876BB_mean_x>secondCol[0]) & (aM876BB_mean_x<secondCol[1]))]
+    ylTG1 = [y1lTG1, y2lTG1, y3lTG1]
+    xHPTG1t  = aM876BB_mean_x[  np.where((scanType==i) & (aM876BB_mean_x>secondCol[2]) & (aM876BB_mean_x<secondCol[3]))]
+    xHPTG1tA  = aM876BB_mean_x[  np.where((scanType==i) & (aM876BB_mean_x>secondColA[2]) & (aM876BB_mean_x<secondColA[3]))]
+    y1tTG1 = aLM875ATOR[np.where((scanType==i) & (aM876BB_mean_x>secondColA[2]) & (aM876BB_mean_x<secondColA[3]))]
+    y2tTG1 = aLM875BTOR[np.where((scanType==i) & (aM876BB_mean_x>secondCol[2]) & (aM876BB_mean_x<secondCol[3]))]
+    y3tTG1 = aLM875CTOR[np.where((scanType==i) & (aM876BB_mean_x>secondCol[2]) & (aM876BB_mean_x<secondCol[3]))]
+    ytTG1 = [y1tTG1, y2tTG1, y3tTG1]
+    xHPTG1r  = aM876BB_mean_x[  np.where((scanType==i) & (aM876BB_mean_x>secondCol[4]) & (aM876BB_mean_x<secondCol[5]))]
+    xHPTG1rA  = aM876BB_mean_x[  np.where((scanType==i) & (aM876BB_mean_x>secondColA[4]) & (aM876BB_mean_x<secondColA[5]))]
+    y1rTG1 = aLM875ATOR[np.where((scanType==i) & (aM876BB_mean_x>secondColA[4]) & (aM876BB_mean_x<secondColA[5]))]
+    y2rTG1 = aLM875BTOR[np.where((scanType==i) & (aM876BB_mean_x>secondCol[4]) & (aM876BB_mean_x<secondCol[5]))]
+    y3rTG1 = aLM875CTOR[np.where((scanType==i) & (aM876BB_mean_x>secondCol[4]) & (aM876BB_mean_x<secondCol[5]))]
+    yrTG1 = [y1rTG1, y2rTG1, y3rTG1]
+    xHPTG1 = [xHPTG1l, xHPTG1t, xHPTG1r]
+    xHPTG1A = [xHPTG1lA, xHPTG1tA, xHPTG1rA]
+    yTG1 = [ylTG1, ytTG1, yrTG1]
+    
+    fitvectorATG1 = [np.poly1d(np.polyfit(xHPTG1A[0],yTG1[0][0],deg=1)), np.poly1d(np.polyfit(xHPTG1A[1],yTG1[1][0],deg=1)), np.poly1d(np.polyfit(xHPTG1A[2],yTG1[2][0],deg=1))]
+    fitvectorBTG1 = [np.poly1d(np.polyfit(xHPTG1[0],yTG1[0][1],deg=1)), np.poly1d(np.polyfit(xHPTG1[1],yTG1[1][1],deg=1)), np.poly1d(np.polyfit(xHPTG1[2],yTG1[2][1],deg=1))]
+    fitvectorCTG1 = [np.poly1d(np.polyfit(xHPTG1[0],yTG1[0][2],deg=1)), np.poly1d(np.polyfit(xHPTG1[1],yTG1[1][2],deg=1)), np.poly1d(np.polyfit(xHPTG1[2],yTG1[2][2],deg=1))]
+    fitvectorTG1 = [fitvectorATG1, fitvectorBTG1, fitvectorCTG1]
+    
+    
+    polyfitATG1L, polyCovMATG1L =np.polyfit(xHPTG1A[0] ,yTG1[0][0],deg=1,cov=True)
+    polyfitATG1M, polyCovMATG1M =np.polyfit(xHPTG1A[1],yTG1[1][0],deg=1,cov=True)
+    polyfitATG1R, polyCovMATG1R=np.polyfit(xHPTG1A[2],yTG1[2][0],deg=1,cov=True)
+    polyfitATG1=[polyfitATG1L,polyfitATG1M,polyfitATG1R]
+    polyCovMATG1=[polyCovMATG1L,polyCovMATG1M,polyCovMATG1R]
+    
+    polyfitBTG1L, polyCovMBTG1L =np.polyfit(xHPTG1[0],yTG1[0][1],deg=1,cov=True)
+    polyfitBTG1M, polyCovMBTG1M =np.polyfit(xHPTG1[1],yTG1[1][1],deg=1,cov=True)
+    polyfitBTG1R, polyCovMBTG1R =np.polyfit(xHPTG1[2],yTG1[2][1],deg=1,cov=True)
+    polyfitBTG1 = [polyfitBTG1L,polyfitBTG1M,polyfitBTG1R]
+    polyCovMBTG1= [polyCovMBTG1L,polyCovMBTG1M,polyCovMBTG1R]
+    
+    polyfitCTG1L, polyCovMCTG1L =np.polyfit(xHPTG1[0],yTG1[0][2],deg=1,cov=True)
+    polyfitCTG1M, polyCovMCTG1M =np.polyfit(xHPTG1[1],yTG1[1][2],deg=1,cov=True)
+    polyfitCTG1R, polyCovMCTG1R =np.polyfit(xHPTG1[2],yTG1[2][2],deg=1,cov=True)
+    polyfitCTG1=[polyfitCTG1L,polyfitCTG1M,polyfitCTG1R]
+    polyCovMCTG1 = [polyCovMCTG1L,polyCovMCTG1M,polyCovMCTG1R]
+    
+    polyfitvectorTG1 = [polyfitATG1,polyfitBTG1,polyfitCTG1]
+    polyfitCovMTG1= [polyCovMATG1,polyCovMBTG1,polyCovMCTG1]
+    
+    
+    #if i==2 #fin scan
+    linspaceTG1 = [np.linspace(-10,3,6), np.linspace(-5,5,6), np.linspace(-3,10,6)]
+    if i==3: #slug scan
+        linspaceTG1 = [np.linspace(-10,0,6), np.linspace(-10,10,6), np.linspace(0,10,6)]
+    
+    # HPTG2
+    xHPTG2l  = aMMBTBB_mean_x[  np.where((scanType==i) & (aMMBTBB_mean_x>thirdCol[0]) & (aMMBTBB_mean_x<thirdCol[1]))]
+    xHPTG2lA  = aMMBTBB_mean_x[  np.where((scanType==i) & (aMMBTBB_mean_x>thirdColA[0]) & (aMMBTBB_mean_x<thirdColA[1]))]
+    y1lTG2 = aLM875ATOR[np.where((scanType==i) & (aMMBTBB_mean_x>thirdColA[0]) & (aMMBTBB_mean_x<thirdColA[1]))]
+    y2lTG2 = aLM875BTOR[np.where((scanType==i) & (aMMBTBB_mean_x>thirdCol[0]) & (aMMBTBB_mean_x<thirdCol[1]))]
+    y3lTG2 = aLM875CTOR[np.where((scanType==i) & (aMMBTBB_mean_x>thirdCol[0]) & (aMMBTBB_mean_x<thirdCol[1]))]
+    ylTG2 = [y1lTG2, y2lTG2, y3lTG2]
+    xHPTG2t  = aMMBTBB_mean_x[  np.where((scanType==i) & (aMMBTBB_mean_x>thirdCol[2]) & (aMMBTBB_mean_x<thirdCol[3]))]
+    xHPTG2tA  = aMMBTBB_mean_x[  np.where((scanType==i) & (aMMBTBB_mean_x>thirdColA[2]) & (aMMBTBB_mean_x<thirdColA[3]))]
+    y1tTG2 = aLM875ATOR[np.where((scanType==i) & (aMMBTBB_mean_x>thirdColA[2]) & (aMMBTBB_mean_x<thirdColA[3]))]
+    y2tTG2 = aLM875BTOR[np.where((scanType==i) & (aMMBTBB_mean_x>thirdCol[2]) & (aMMBTBB_mean_x<thirdCol[3]))]
+    y3tTG2 = aLM875CTOR[np.where((scanType==i) & (aMMBTBB_mean_x>thirdCol[2]) & (aMMBTBB_mean_x<thirdCol[3]))]
+    ytTG2 = [y1tTG2, y2tTG2, y3tTG2]
+    xHPTG2r  = aMMBTBB_mean_x[  np.where((scanType==i) & (aMMBTBB_mean_x>thirdCol[4]) & (aMMBTBB_mean_x<thirdCol[5]))]
+    xHPTG2rA  = aMMBTBB_mean_x[  np.where((scanType==i) & (aMMBTBB_mean_x>thirdColA[4]) & (aMMBTBB_mean_x<thirdColA[5]))]
+    y1rTG2 = aLM875ATOR[np.where((scanType==i) & (aMMBTBB_mean_x>thirdColA[4]) & (aMMBTBB_mean_x<thirdColA[5]))]
+    y2rTG2 = aLM875BTOR[np.where((scanType==i) & (aMMBTBB_mean_x>thirdCol[4]) & (aMMBTBB_mean_x<thirdCol[5]))]
+    y3rTG2 = aLM875CTOR[np.where((scanType==i) & (aMMBTBB_mean_x>thirdCol[4]) & (aMMBTBB_mean_x<thirdCol[5]))]
+    yrTG2 = [y1rTG2, y2rTG2, y3rTG2]
+    xHPTG2 = [xHPTG2l, xHPTG2t, xHPTG2r]
+    xHPTG2A = [xHPTG2lA, xHPTG2tA, xHPTG2rA]
+    yTG2 = [ylTG2, ytTG2, yrTG2]
+    
+    fitvectorATG2 = [np.poly1d(np.polyfit(xHPTG2A[0],yTG2[0][0],deg=1)), np.poly1d(np.polyfit(xHPTG2A[1],yTG2[1][0],deg=1)), np.poly1d(np.polyfit(xHPTG2A[2],yTG2[2][0],deg=1))]
+    fitvectorBTG2 = [np.poly1d(np.polyfit(xHPTG2[0],yTG2[0][1],deg=1)), np.poly1d(np.polyfit(xHPTG2[1],yTG2[1][1],deg=1)), np.poly1d(np.polyfit(xHPTG2[2],yTG2[2][1],deg=1))]
+    fitvectorCTG2 = [np.poly1d(np.polyfit(xHPTG2[0],yTG2[0][2],deg=1)), np.poly1d(np.polyfit(xHPTG2[1],yTG2[1][2],deg=1)), np.poly1d(np.polyfit(xHPTG2[2],yTG2[2][2],deg=1))]
+    fitvectorTG2 = [fitvectorATG2, fitvectorBTG2, fitvectorCTG2]
+    
+    polyfitATG2L, polyCovMATG2L =np.polyfit(xHPTG2A[0] ,yTG2[0][0],deg=1,cov=True)
+    polyfitATG2M, polyCovMATG2M =np.polyfit(xHPTG2A[1],yTG2[1][0],deg=1,cov=True)
+    polyfitATG2R, polyCovMATG2R=np.polyfit(xHPTG2A[2],yTG2[2][0],deg=1,cov=True)
+    polyfitATG2=[polyfitATG2L,polyfitATG2M,polyfitATG2R]
+    polyCovMATG2=[polyCovMATG2L,polyCovMATG2M,polyCovMATG2R]
+    
+    polyfitBTG2L, polyCovMBTG2L =np.polyfit(xHPTG2[0],yTG2[0][1],deg=1,cov=True)
+    polyfitBTG2M, polyCovMBTG2M =np.polyfit(xHPTG2[1],yTG2[1][1],deg=1,cov=True)
+    polyfitBTG2R, polyCovMBTG2R =np.polyfit(xHPTG2[2],yTG2[2][1],deg=1,cov=True)
+    polyfitBTG2 = [polyfitBTG2L,polyfitBTG2M,polyfitBTG2R]
+    polyCovMBTG2= [polyCovMBTG2L,polyCovMBTG2M,polyCovMBTG2R]
+    
+    polyfitCTG2L, polyCovMCTG2L =np.polyfit(xHPTG2[0],yTG2[0][2],deg=1,cov=True)
+    polyfitCTG2M, polyCovMCTG2M =np.polyfit(xHPTG2[1],yTG2[1][2],deg=1,cov=True)
+    polyfitCTG2R, polyCovMCTG2R =np.polyfit(xHPTG2[2],yTG2[2][2],deg=1,cov=True)
+    polyfitCTG2=[polyfitCTG2L,polyfitCTG2M,polyfitCTG2R]
+    polyCovMCTG2 = [polyCovMCTG2L,polyCovMCTG2M,polyCovMCTG2R]
+    
+    
+    polyfitvectorTG2 = [polyfitATG2,polyfitBTG2,polyfitCTG2]
+    polyfitCovMTG2= [polyCovMATG2,polyCovMBTG2,polyCovMCTG2]
+    
+    #if i==2 #fin scan
+    linspaceTG2 = [np.linspace(-10,3,6), np.linspace(-5,5,6), np.linspace(-3,10,6)]
+    if i==3: #slug scan
+        linspaceTG2 = [np.linspace(-10,0,6), np.linspace(-10,10,6), np.linspace(0,10,6)]
+    
+    fitvector = [fitvector875, fitvectorTG1, fitvectorTG2]
+    linspace = [linspace875, linspaceTG1, linspaceTG2]
+    #print '******HORIZONAL SCAN*******'
+    
+    for pm, posMon in enumerate(fitvector):
+        for lm,lossMon in enumerate(posMon):
+            #print 'plot['+str(lm)+','+str(pm)+'] '+ name[i]
+            roots = []
+            for sec,section in enumerate(linspace[pm]):
+                f8axarr[f][lm,pm].plot(section,lossMon[sec](section),'k-',alpha=0.5)
+                if sec>0:
+                    root = (lossMon[sec]-lossMon[sec-1]).roots
+                    f8axarr[f][lm,pm].plot(root[0],lossMon[sec](root[0]),'o')
+                    roots.append(root[0])
+    
+            #print 'roots = '
+            #print roots
+    
+            center = float(roots[0]+(0.5*(roots[1]-roots[0])))
+            centery = float(lossMon[1](center))
+            f8axarr[f][lm,pm].plot(center,centery,'o')
+            annotation_string = r"%0.2f" % (center)
+            f8axarr[f][lm,pm].annotate(annotation_string, (center-2, centery-0.005), color='red')
+    
+    if i==2: #fin
+        FinHMWFits = [polyfitvector875, polyfitvectorTG1, polyfitvectorTG2]
+        FinHMWCovM = [polyfitCovM875, polyfitCovMTG1, polyfitCovMTG2]
+    
+    if i==3: #slug
+        SlugHMWFits = [polyfitvector875, polyfitvectorTG1, polyfitvectorTG2]
+        SlugHMWCovM = [polyfitCovM875, polyfitCovMTG1, polyfitCovMTG2]
+    
+    
+    f=f+1
+
+#---------------plot Loss vs. vertical beam position ---------------
+fig9_1, f9axarr_1 = plt.subplots(3,4,figsize=(11,9),sharex=True,sharey=True)
+#fig9_2, f9axarr_2 = plt.subplots(3,4,figsize=(11,9),sharex=True,sharey=True)
+#fig9_3, f9axarr_3 = plt.subplots(3,4,figsize=(11,9),sharex=True,sharey=True)
+#fig9_4, f9axarr_4 = plt.subplots(3,4,figsize=(11,9),sharex=True,sharey=True)
+
+fig9 = [fig9_1]#, fig9_2, fig9_3, fig9_4]
+f9axarr = [f9axarr_1]#, f9axarr_2, f9axarr_3, f9axarr_4]
+
+f=0
+for i in range(1,2): ##for i in range(0,4):
+    f9axarr[f][0,3].set_ylim(-0.005,0.04)
+    f9axarr[f][0,3].set_xlim(-13,13)
+    f9axarr[f][0,3].scatter(aM875BB_mean_y[np.where(scanType==i)], aLM875ATOR[np.where(scanType==i)], c='firebrick'  , alpha=0.1, lw=0, label='LM875A')
+    f9axarr[f][0,3].scatter(aM876BB_mean_y[np.where(scanType==i)], aLM875ATOR[np.where(scanType==i)], c='orange'     , alpha=0.1, lw=0, label='LM875A')
+    f9axarr[f][0,3].scatter(aMMBTBB_mean_y[np.where(scanType==i)], aLM875ATOR[np.where(scanType==i)], c='steelblue'  , alpha=0.1, lw=0, label='LM875A')
+    f9axarr[f][0,0].scatter(aM875BB_mean_y[np.where(scanType==i)], aLM875ATOR[np.where(scanType==i)], c='firebrick'  , alpha=0.1, lw=0, label='LM875A')
+    f9axarr[f][0,1].scatter(aM876BB_mean_y[np.where(scanType==i)], aLM875ATOR[np.where(scanType==i)], c='orange'     , alpha=0.1, lw=0, label='LM875A')
+    f9axarr[f][0,2].scatter(aMMBTBB_mean_y[np.where(scanType==i)], aLM875ATOR[np.where(scanType==i)], c='steelblue'  , alpha=0.1, lw=0, label='LM875A')
+
+    f9axarr[f][1,3].scatter(aM875BB_mean_y[np.where(scanType==i)], aLM875BTOR[np.where(scanType==i)], c='firebrick'  , alpha=0.1, lw=0, label='LM875B')
+    f9axarr[f][1,3].scatter(aM876BB_mean_y[np.where(scanType==i)], aLM875BTOR[np.where(scanType==i)], c='orange'     , alpha=0.1, lw=0, label='LM875B')
+    f9axarr[f][1,3].scatter(aMMBTBB_mean_y[np.where(scanType==i)], aLM875BTOR[np.where(scanType==i)], c='steelblue'  , alpha=0.1, lw=0, label='LM875B')
+    f9axarr[f][1,0].scatter(aM875BB_mean_y[np.where(scanType==i)], aLM875BTOR[np.where(scanType==i)], c='firebrick'  , alpha=0.1, lw=0, label='LM875B')
+    f9axarr[f][1,1].scatter(aM876BB_mean_y[np.where(scanType==i)], aLM875BTOR[np.where(scanType==i)], c='orange'     , alpha=0.1, lw=0, label='LM875B')
+    f9axarr[f][1,2].scatter(aMMBTBB_mean_y[np.where(scanType==i)], aLM875BTOR[np.where(scanType==i)], c='steelblue'  , alpha=0.1, lw=0, label='LM875B')
+
+    f9axarr[f][2,3].scatter(aM875BB_mean_y[np.where(scanType==i)], aLM875CTOR[np.where(scanType==i)], c='firebrick'  , alpha=0.1, lw=0, label='LM875C')
+    f9axarr[f][2,3].scatter(aM876BB_mean_y[np.where(scanType==i)], aLM875CTOR[np.where(scanType==i)], c='orange'     , alpha=0.1, lw=0, label='LM875C')
+    f9axarr[f][2,3].scatter(aMMBTBB_mean_y[np.where(scanType==i)], aLM875CTOR[np.where(scanType==i)], c='steelblue'  , alpha=0.1, lw=0, label='LM875C')
+    f9axarr[f][2,0].scatter(aM875BB_mean_y[np.where(scanType==i)], aLM875CTOR[np.where(scanType==i)], c='firebrick'  , alpha=0.1, lw=0, label='LM875C')
+    f9axarr[f][2,1].scatter(aM876BB_mean_y[np.where(scanType==i)], aLM875CTOR[np.where(scanType==i)], c='orange'     , alpha=0.1, lw=0, label='LM875C')
+    f9axarr[f][2,2].scatter(aMMBTBB_mean_y[np.where(scanType==i)], aLM875CTOR[np.where(scanType==i)], c='steelblue'  , alpha=0.1, lw=0, label='LM875C')
+
+
+
+    f9axarr[f][0,0].set_ylabel('LM875A')
+    f9axarr[f][1,0].set_ylabel('LM875B')
+    f9axarr[f][2,0].set_ylabel('LM875C')
+    f9axarr[f][0,0].set_title('MW875y')
+    f9axarr[f][0,1].set_title('MW876y')
+    f9axarr[f][0,2].set_title('MWMBTy')
+    f9axarr[f][0,3].set_title('overlay')
+
+    #f9axarr[f][2,3].legend(loc='center right',bbox_to_anchor=(0.99,0.5),bbox_transform=plt.gcf().transFigure, scatterpoints=1)
+
+    #fig9[f].tight_layout()
+    fig9[f].subplots_adjust(left=0.11, bottom=0.1, top=0.92, wspace=0.3, hspace=0.3)
+
+    fig9[f].text(0.5, 0.03, 'Position (Vertical) (mm)', ha='center', size='large')
+    fig9[f].text(0.015, 0.5, 'Loss/TOR875 (a.u.)', va='center', rotation='vertical', size='large')
+    fig9[f].text(0.3,0.97, name[i]+'Loss/TOR875 v. Vertical MW Position', size='large')
+
+    for l in range(0,3):
+        for j in range(0,4):
+            #f9axarr[f][l,j].ticklabel_format(style='sci', axis='x', scilimits=(0,0))
+            f9axarr[f][l,j].grid(True)
+
+    ################
+    #  FIT  LINES  #
+    ################
+    firstCol= [-10,-5,-4,2,3,7]
+    #firstColA=[firstCol[0],firstCol[1],firstCol[2],firstCol[3],firstCol[4],2]
+    secondCol=[-9,-5,-4,2,4,8]
+    #secondColA=[secondCol[0],secondCol[1],secondCol[2],0,secondCol[4],2.25]
+    thirdCol= [-5.5,-2,-1,4,5,7]
+    #thirdColA= [thirdCol[0],thirdCol[1],thirdCol[2],0.75,thirdCol[4],3]
+    
+    # M875BB_mean_y
+    xM875BB_mean_yl  = aM875BB_mean_y[    np.where((scanType==i) & (aM875BB_mean_y>firstCol[0]) & (aM875BB_mean_y<firstCol[1]))]
+    y1l875 = aLM875ATOR[np.where((scanType==i) & (aM875BB_mean_y>firstCol[0]) & (aM875BB_mean_y<firstCol[1]))]
+    y2l875 = aLM875BTOR[np.where((scanType==i) & (aM875BB_mean_y>firstCol[0]) & (aM875BB_mean_y<firstCol[1]))]
+    y3l875 = aLM875CTOR[np.where((scanType==i) & (aM875BB_mean_y>firstCol[0]) & (aM875BB_mean_y<firstCol[1]))]
+    yl875 = [y1l875, y2l875, y3l875]
+    xM875BB_mean_yt  = aM875BB_mean_y[    np.where((scanType==i) & (aM875BB_mean_y>firstCol[2]) & (aM875BB_mean_y<firstCol[3]))]
+    y1t875 = aLM875ATOR[np.where((scanType==i) & (aM875BB_mean_y>firstCol[2]) & (aM875BB_mean_y<firstCol[3]))]
+    y2t875 = aLM875BTOR[np.where((scanType==i) & (aM875BB_mean_y>firstCol[2]) & (aM875BB_mean_y<firstCol[3]))]
+    y3t875 = aLM875CTOR[np.where((scanType==i) & (aM875BB_mean_y>firstCol[2]) & (aM875BB_mean_y<firstCol[3]))]
+    yt875 = [y1t875, y2t875, y3t875]
+    xM875BB_mean_yr  = aM875BB_mean_y[    np.where((scanType==i) & (aM875BB_mean_y>firstCol[4]) & (aM875BB_mean_y<firstCol[5]))]
+    y1r875 = aLM875ATOR[np.where((scanType==i) & (aM875BB_mean_y>firstCol[4]) & (aM875BB_mean_y<firstCol[5]))]
+    y2r875 = aLM875BTOR[np.where((scanType==i) & (aM875BB_mean_y>firstCol[4]) & (aM875BB_mean_y<firstCol[5]))]
+    y3r875 = aLM875CTOR[np.where((scanType==i) & (aM875BB_mean_y>firstCol[4]) & (aM875BB_mean_y<firstCol[5]))]
+    yr875 = [y1r875, y2r875, y3r875]
+    xM875BB_mean_y = [xM875BB_mean_yl, xM875BB_mean_yt, xM875BB_mean_yr]
+    y875 = [yl875, yt875, yr875]
+    
+    fitvectorA875 = [np.poly1d(np.polyfit(xM875BB_mean_y[0],y875[0][0],deg=1)), np.poly1d(np.polyfit(xM875BB_mean_y[1],y875[1][0],deg=1)), np.poly1d(np.polyfit(xM875BB_mean_y[2],y875[2][0],deg=1))]
+    fitvectorB875 = [np.poly1d(np.polyfit(xM875BB_mean_y[0],y875[0][1],deg=1)), np.poly1d(np.polyfit(xM875BB_mean_y[1],y875[1][1],deg=1)), np.poly1d(np.polyfit(xM875BB_mean_y[2],y875[2][1],deg=1))]
+    fitvectorC875 = [np.poly1d(np.polyfit(xM875BB_mean_y[0],y875[0][2],deg=1)), np.poly1d(np.polyfit(xM875BB_mean_y[1],y875[1][2],deg=1)), np.poly1d(np.polyfit(xM875BB_mean_y[2],y875[2][2],deg=1))]
+    fitvector875 = [fitvectorA875, fitvectorB875, fitvectorC875]
+    linspace875 = [np.linspace(-11,-4,6), np.linspace(-6,4,6), np.linspace(2,8,6)]
+    
+    polyfitA875L, polyCovMA875L =np.polyfit(xM875BB_mean_y[0] ,y875[0][0],deg=1,cov=True)
+    polyfitA875M, polyCovMA875M =np.polyfit(xM875BB_mean_y[1],y875[1][0],deg=1,cov=True)
+    polyfitA875R, polyCovMA875R= np.polyfit(xM875BB_mean_y[2],y875[2][0],deg=1,cov=True)
+    polyfitA875=[polyfitA875L,polyfitA875M,polyfitA875R]
+    polyCovMA875=[polyCovMA875L,polyCovMA875M,polyCovMA875R]
+    
+    polyfitB875L, polyCovMB875L =np.polyfit(xM875BB_mean_y[0],y875[0][1],deg=1,cov=True)
+    polyfitB875M, polyCovMB875M =np.polyfit(xM875BB_mean_y[1],y875[1][1],deg=1,cov=True)
+    polyfitB875R, polyCovMB875R =np.polyfit(xM875BB_mean_y[2],y875[2][1],deg=1,cov=True)
+    polyfitB875 = [polyfitB875L,polyfitB875M,polyfitB875R]
+    polyCovMB875= [polyCovMB875L,polyCovMB875M,polyCovMB875R]
+    
+    polyfitC875L, polyCovMC875L =np.polyfit(xM875BB_mean_y[0],y875[0][2],deg=1,cov=True)
+    polyfitC875M, polyCovMC875M =np.polyfit(xM875BB_mean_y[1],y875[1][2],deg=1,cov=True)
+    polyfitC875R, polyCovMC875R =np.polyfit(xM875BB_mean_y[2],y875[2][2],deg=1,cov=True)
+    polyfitC875=[polyfitC875L,polyfitC875M,polyfitC875R]
+    polyCovMC875 = [polyCovMC875L,polyCovMC875M,polyCovMC875R]
+    
+    polyfitvector875 = [polyfitA875,polyfitB875,polyfitC875]
+    polyfitCovM875= [polyCovMA875,polyCovMB875,polyCovMC875]
+    
+    # M876BB_mean_y
+    xM876BB_mean_yl  = aM876BB_mean_y[    np.where((scanType==i) & (aM876BB_mean_y>secondCol[0]) & (aM876BB_mean_y<secondCol[1]))]
+    y1lTG1 = aLM875ATOR[np.where((scanType==i) & (aM876BB_mean_y>secondCol[0]) & (aM876BB_mean_y<secondCol[1]))]
+    y2lTG1 = aLM875BTOR[np.where((scanType==i) & (aM876BB_mean_y>secondCol[0]) & (aM876BB_mean_y<secondCol[1]))]
+    y3lTG1 = aLM875CTOR[np.where((scanType==i) & (aM876BB_mean_y>secondCol[0]) & (aM876BB_mean_y<secondCol[1]))]
+    ylTG1 = [y1lTG1, y2lTG1, y3lTG1]
+    xM876BB_mean_yt  = aM876BB_mean_y[    np.where((scanType==i) & (aM876BB_mean_y>secondCol[2]) & (aM876BB_mean_y<secondCol[3]))]
+    y1tTG1 = aLM875ATOR[np.where((scanType==i) & (aM876BB_mean_y>secondCol[2]) & (aM876BB_mean_y<secondCol[3]))]
+    y2tTG1 = aLM875BTOR[np.where((scanType==i) & (aM876BB_mean_y>secondCol[2]) & (aM876BB_mean_y<secondCol[3]))]
+    y3tTG1 = aLM875CTOR[np.where((scanType==i) & (aM876BB_mean_y>secondCol[2]) & (aM876BB_mean_y<secondCol[3]))]
+    ytTG1 = [y1tTG1, y2tTG1, y3tTG1]
+    xM876BB_mean_yr  = aM876BB_mean_y[    np.where((scanType==i) & (aM876BB_mean_y>secondCol[4]) & (aM876BB_mean_y<secondCol[5]))]
+    y1rTG1 = aLM875ATOR[np.where((scanType==i) & (aM876BB_mean_y>secondCol[4]) & (aM876BB_mean_y<secondCol[5]))]
+    y2rTG1 = aLM875BTOR[np.where((scanType==i) & (aM876BB_mean_y>secondCol[4]) & (aM876BB_mean_y<secondCol[5]))]
+    y3rTG1 = aLM875CTOR[np.where((scanType==i) & (aM876BB_mean_y>secondCol[4]) & (aM876BB_mean_y<secondCol[5]))]
+    yrTG1 = [y1rTG1, y2rTG1, y3rTG1]
+    xM876BB_mean_y = [xM876BB_mean_yl, xM876BB_mean_yt, xM876BB_mean_yr]
+    yTG1 = [ylTG1, ytTG1, yrTG1]
+    
+    fitvectorATG1 = [np.poly1d(np.polyfit(xM876BB_mean_y[0],yTG1[0][0],deg=1)), np.poly1d(np.polyfit(xM876BB_mean_y[1],yTG1[1][0],deg=1)), np.poly1d(np.polyfit(xM876BB_mean_y[2],yTG1[2][0],deg=1))]
+    fitvectorBTG1 = [np.poly1d(np.polyfit(xM876BB_mean_y[0],yTG1[0][1],deg=1)), np.poly1d(np.polyfit(xM876BB_mean_y[1],yTG1[1][1],deg=1)), np.poly1d(np.polyfit(xM876BB_mean_y[2],yTG1[2][1],deg=1))]
+    fitvectorCTG1 = [np.poly1d(np.polyfit(xM876BB_mean_y[0],yTG1[0][2],deg=1)), np.poly1d(np.polyfit(xM876BB_mean_y[1],yTG1[1][2],deg=1)), np.poly1d(np.polyfit(xM876BB_mean_y[2],yTG1[2][2],deg=1))]
+    fitvectorTG1 = [fitvectorATG1, fitvectorBTG1, fitvectorCTG1]
+    linspaceTG1 = [np.linspace(-10,-4,6), np.linspace(-6,5,6), np.linspace(2,9,6)]
+    
+    polyfitATG1L, polyCovMATG1L =np.polyfit(xM876BB_mean_y[0] ,yTG1[0][0],deg=1,cov=True)
+    polyfitATG1M, polyCovMATG1M =np.polyfit(xM876BB_mean_y[1],yTG1[1][0],deg=1,cov=True)
+    polyfitATG1R, polyCovMATG1R= np.polyfit(xM876BB_mean_y[2],yTG1[2][0],deg=1,cov=True)
+    polyfitATG1=[polyfitATG1L,polyfitATG1M,polyfitATG1R]
+    polyCovMATG1=[polyCovMATG1L,polyCovMATG1M,polyCovMATG1R]
+    
+    polyfitBTG1L, polyCovMBTG1L =np.polyfit(xM876BB_mean_y[0],yTG1[0][1],deg=1,cov=True)
+    polyfitBTG1M, polyCovMBTG1M =np.polyfit(xM876BB_mean_y[1],yTG1[1][1],deg=1,cov=True)
+    polyfitBTG1R, polyCovMBTG1R =np.polyfit(xM876BB_mean_y[2],yTG1[2][1],deg=1,cov=True)
+    polyfitBTG1 = [polyfitBTG1L,polyfitBTG1M,polyfitBTG1R]
+    polyCovMBTG1= [polyCovMBTG1L,polyCovMBTG1M,polyCovMBTG1R]
+    
+    polyfitCTG1L, polyCovMCTG1L =np.polyfit(xM876BB_mean_y[0],yTG1[0][2],deg=1,cov=True)
+    polyfitCTG1M, polyCovMCTG1M =np.polyfit(xM876BB_mean_y[1],yTG1[1][2],deg=1,cov=True)
+    polyfitCTG1R, polyCovMCTG1R =np.polyfit(xM876BB_mean_y[2],yTG1[2][2],deg=1,cov=True)
+    polyfitCTG1=[polyfitCTG1L,polyfitCTG1M,polyfitCTG1R]
+    polyCovMCTG1 = [polyCovMCTG1L,polyCovMCTG1M,polyCovMCTG1R]
+    
+    polyfitvectorTG1 = [polyfitATG1,polyfitBTG1,polyfitCTG1]
+    polyfitCovMTG1= [polyCovMATG1,polyCovMBTG1,polyCovMCTG1]
+    
+    
+    # MMBTBB_mean_y
+    xMMBTBB_mean_yl  = aMMBTBB_mean_y[    np.where((scanType==i) & (aMMBTBB_mean_y>thirdCol[0]) & (aMMBTBB_mean_y<thirdCol[1]))]
+    y1lTG2 = aLM875ATOR[np.where((scanType==i) & (aMMBTBB_mean_y>thirdCol[0]) & (aMMBTBB_mean_y<thirdCol[1]))]
+    y2lTG2 = aLM875BTOR[np.where((scanType==i) & (aMMBTBB_mean_y>thirdCol[0]) & (aMMBTBB_mean_y<thirdCol[1]))]
+    y3lTG2 = aLM875CTOR[np.where((scanType==i) & (aMMBTBB_mean_y>thirdCol[0]) & (aMMBTBB_mean_y<thirdCol[1]))]
+    ylTG2 = [y1lTG2, y2lTG2, y3lTG2]
+    xMMBTBB_mean_yt  = aMMBTBB_mean_y[    np.where((scanType==i) & (aMMBTBB_mean_y>thirdCol[2]) & (aMMBTBB_mean_y<thirdCol[3]))]
+    y1tTG2 = aLM875ATOR[np.where((scanType==i) & (aMMBTBB_mean_y>thirdCol[2]) & (aMMBTBB_mean_y<thirdCol[3]))]
+    y2tTG2 = aLM875BTOR[np.where((scanType==i) & (aMMBTBB_mean_y>thirdCol[2]) & (aMMBTBB_mean_y<thirdCol[3]))]
+    y3tTG2 = aLM875CTOR[np.where((scanType==i) & (aMMBTBB_mean_y>thirdCol[2]) & (aMMBTBB_mean_y<thirdCol[3]))]
+    ytTG2 = [y1tTG2, y2tTG2, y3tTG2]
+    xMMBTBB_mean_yr  = aMMBTBB_mean_y[    np.where((scanType==i) & (aMMBTBB_mean_y>thirdCol[4]) & (aMMBTBB_mean_y<thirdCol[5]))]
+    y1rTG2 = aLM875ATOR[np.where((scanType==i) & (aMMBTBB_mean_y>thirdCol[4]) & (aMMBTBB_mean_y<thirdCol[5]))]
+    y2rTG2 = aLM875BTOR[np.where((scanType==i) & (aMMBTBB_mean_y>thirdCol[4]) & (aMMBTBB_mean_y<thirdCol[5]))]
+    y3rTG2 = aLM875CTOR[np.where((scanType==i) & (aMMBTBB_mean_y>thirdCol[4]) & (aMMBTBB_mean_y<thirdCol[5]))]
+    yrTG2 = [y1rTG2, y2rTG2, y3rTG2]
+    xMMBTBB_mean_y = [xMMBTBB_mean_yl, xMMBTBB_mean_yt, xMMBTBB_mean_yr]
+    yTG2 = [ylTG2, ytTG2, yrTG2]
+    
+    fitvectorATG2 = [np.poly1d(np.polyfit(xMMBTBB_mean_y[0],yTG2[0][0],deg=1)), np.poly1d(np.polyfit(xMMBTBB_mean_y[1],yTG2[1][0],deg=1)), np.poly1d(np.polyfit(xMMBTBB_mean_y[2],yTG2[2][0],deg=1))]
+    fitvectorBTG2 = [np.poly1d(np.polyfit(xMMBTBB_mean_y[0],yTG2[0][1],deg=1)), np.poly1d(np.polyfit(xMMBTBB_mean_y[1],yTG2[1][1],deg=1)), np.poly1d(np.polyfit(xMMBTBB_mean_y[2],yTG2[2][1],deg=1))]
+    fitvectorCTG2 = [np.poly1d(np.polyfit(xMMBTBB_mean_y[0],yTG2[0][2],deg=1)), np.poly1d(np.polyfit(xMMBTBB_mean_y[1],yTG2[1][2],deg=1)), np.poly1d(np.polyfit(xMMBTBB_mean_y[2],yTG2[2][2],deg=1))]
+    fitvectorTG2 = [fitvectorATG2, fitvectorBTG2, fitvectorCTG2]
+    linspaceTG2 = [np.linspace(-6,-1,6), np.linspace(-3,6,6), np.linspace(4,8,6)]
+    
+    polyfitATG2L, polyCovMATG2L =np.polyfit(xMMBTBB_mean_y[0] ,yTG2[0][0],deg=1,cov=True)
+    polyfitATG2M, polyCovMATG2M =np.polyfit(xMMBTBB_mean_y[1],yTG2[1][0],deg=1,cov=True)
+    polyfitATG2R, polyCovMATG2R= np.polyfit(xMMBTBB_mean_y[2],yTG2[2][0],deg=1,cov=True)
+    polyfitATG2=[polyfitATG2L,polyfitATG2M,polyfitATG2R]
+    polyCovMATG2=[polyCovMATG2L,polyCovMATG2M,polyCovMATG2R]
+    
+    polyfitBTG2L, polyCovMBTG2L =np.polyfit(xMMBTBB_mean_y[0],yTG2[0][1],deg=1,cov=True)
+    polyfitBTG2M, polyCovMBTG2M =np.polyfit(xMMBTBB_mean_y[1],yTG2[1][1],deg=1,cov=True)
+    polyfitBTG2R, polyCovMBTG2R =np.polyfit(xMMBTBB_mean_y[2],yTG2[2][1],deg=1,cov=True)
+    polyfitBTG2 = [polyfitBTG2L,polyfitBTG2M,polyfitBTG2R]
+    polyCovMBTG2= [polyCovMBTG2L,polyCovMBTG2M,polyCovMBTG2R]
+    
+    polyfitCTG2L, polyCovMCTG2L =np.polyfit(xMMBTBB_mean_y[0],yTG2[0][2],deg=1,cov=True)
+    polyfitCTG2M, polyCovMCTG2M =np.polyfit(xMMBTBB_mean_y[1],yTG2[1][2],deg=1,cov=True)
+    polyfitCTG2R, polyCovMCTG2R =np.polyfit(xMMBTBB_mean_y[2],yTG2[2][2],deg=1,cov=True)
+    polyfitCTG2=[polyfitCTG2L,polyfitCTG2M,polyfitCTG2R]
+    polyCovMCTG2 = [polyCovMCTG2L,polyCovMCTG2M,polyCovMCTG2R]
+    
+    polyfitvectorTG2 = [polyfitATG2,polyfitBTG2,polyfitCTG2]
+    polyfitCovMTG2= [polyCovMATG2,polyCovMBTG2,polyCovMCTG2]
+    
+    fitvector = [fitvector875, fitvectorTG1, fitvectorTG2]
+    linspace = [linspace875, linspaceTG1, linspaceTG2]
+    #print '******VERTICAL SCAN*******'
+    for pm, posMon in enumerate(fitvector):
+        for lm,lossMon in enumerate(posMon):
+            #print 'plot['+str(lm)+','+str(pm)+']'
+            roots = []
+            for sec,section in enumerate(linspace[pm]):
+                f9axarr[f][lm,pm].plot(section,lossMon[sec](section),'k-',alpha=0.5)
+                if sec>0:
+                    root = (lossMon[sec]-lossMon[sec-1]).roots
+                    f9axarr[f][lm,pm].plot(root[0],lossMon[sec](root[0]),'o')
+                    #print '    root = '+str(root[0])
+                    roots.append(root[0])
+            center = float(roots[0]+(0.5*(roots[1]-roots[0])))
+            centery = float(lossMon[1](center))
+            #print '        center = ' + str(center)
+            #print type(center)
+            #print type(centery)
+            annotation_string = r"%0.2f" % (center)
+            f9axarr[f][lm,pm].plot(center,centery,'o')
+            f9axarr[f][lm,pm].annotate(annotation_string, (center-2, centery-0.005), color='red')
+    
+    SlugVMWFits=[polyfitvector875,polyfitvectorTG1,polyfitvectorTG2]
+    SlugVMWCovM=[polyfitCovM875,polyfitCovMTG1,polyfitCovMTG2]
+
+    f=f+1
+
+
 #Save fits for analysis:
 np.save("TargetFits_FinHFits.npy",FinHFits)
 np.save("TargetFits_FinHCovM.npy",FinHCovM)
+np.save("TargetFits_FinHMWFits.npy",FinHMWFits)
+np.save("TargetFits_FinHMWCovM.npy",FinHMWCovM)
 np.save("TargetFits_SlugHFits.npy",SlugHFits)
 np.save("TargetFits_SlugHCovM.npy",SlugHCovM)
+np.save("TargetFits_SlugHMWFits.npy",SlugHMWFits)
+np.save("TargetFits_SlugHMWCovM.npy",SlugHMWCovM)
 np.save("TargetFits_SlugVFits.npy",SlugVFits)
 np.save("TargetFits_SlugVCovM.npy",SlugVCovM)
+np.save("TargetFits_SlugVMWFits.npy",SlugVMWFits)
+np.save("TargetFits_SlugVMWCovM.npy",SlugVMWCovM)
 #filename = "TargetFits.pickle"
 #with open(filename,'w') as f:
 #    pickle.dump(FinHFits,f)
@@ -929,11 +1464,11 @@ np.save("TargetFits_SlugVCovM.npy",SlugVCovM)
 
 plt.show()
 pp.savefig(fig2)
-pp.savefig(fig0[0])
-pp.savefig(fig0[1])
-pp.savefig(fig0[2])
 pp.savefig(fig6[0])
 pp.savefig(fig6[1])
 pp.savefig(fig7[0])
+pp.savefig(fig8[0])
+pp.savefig(fig8[1])
+pp.savefig(fig9[0])
 pp.close()
 

@@ -23,6 +23,7 @@ import csv
 from matplotlib.backends.backend_pdf import PdfPages
 pp = PdfPages('TargetScanUncertainties_run0005544.pdf')
 
+#n_pulls=10
 n_pulls=30
 FinHFits=[]
 FinHCovM=[]
@@ -118,9 +119,10 @@ for beamScan,beamScanCov in zip(TargetFits,TargetCovM):
 
             string = bsname[bs]+ pmname[pm]+lmname[lm]+ str(meanCenter) + " +/- " + str(stdCenter)
             print string
-            nums = str(meanCenter) + " +/- " + str(stdCenter)
+            #nums = str(meanCenter) + " +/- " + str(stdCenter)
+            nums = str('{:0.2f}'.format(meanCenter)) + " +/- " + str('{:0.2f}'.format(stdCenter))
             axarr[bs][lm,pm].hist(centers,50)
-            #axarr[bs][lm,pm].annotate(nums)
+            axarr[bs][lm,pm].annotate(nums, (0.55,0.92), xycoords='axes fraction')
 
             lm=lm+1
 
@@ -133,8 +135,8 @@ for beamScan,beamScanCov in zip(TargetFits,TargetCovM):
     bs=bs+1
 
 
-#plt.show()
-pp.savefig(fig[0])
-pp.savefig(fig[1])
-pp.savefig(fig[2])
-pp.close()
+plt.show()
+#pp.savefig(fig[0])
+#pp.savefig(fig[1])
+#pp.savefig(fig[2])
+#pp.close()
