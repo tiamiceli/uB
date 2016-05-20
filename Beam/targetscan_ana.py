@@ -327,7 +327,11 @@ f2axarr[1,0].add_patch(pat.Rectangle([150000,-9.5],225000,19.5,fill=False,ec='re
 f2axarr[1,0].add_patch(pat.Rectangle([375000,-9.5],85000,19.5,fill=False,ec='red'))
 f2axarr[1,0].add_patch(pat.Rectangle([500000,-9.5],225000,19.5,fill=False,ec='red'))
 
+#f2axarr[0,1].set_aspect('equal', 'datalim')
+#f2axarr[0,1].add_patch(pat.Circle((0.5,-0.2),2.8,color='b', alpha=0.5))
+#f2axarr[0,1].plot([0.5,0.5],[-3,-10],color='b', alpha=0.5, linewidth=3)
 f2axarr[0,1].scatter(aHPTG2[np.where(scanType!=-1)], aVPTG2[np.where(scanType!=-1)], c='orange'  , alpha=0.1, lw=0, label='VPTG2')
+
 f2axarr[0,1].set_xlim([np.amin(aHPTG2[np.where(scanType!=-1)]),np.amax(aHPTG2[np.where(scanType!=-1)])]);
 f2axarr[0,1].set_ylim([np.amin(aVPTG2[np.where(scanType!=-1)]),np.amax(aVPTG2[np.where(scanType!=-1)])]);
 f2axarr[0,1].set_xlabel('Horizontal Position (mm)')
