@@ -55,6 +55,8 @@ plt.title('HARP PiPlus Cross Section (raw)')
 #Prepare an 2d array to store the cross section information4
 thetaBins = np.linspace(thetaMid[0],thetaMid[-1],100)
 pBins = np.linspace(momentumMid[0],momentumMid[-1],100)
+#dt = thetaBins[1]-thetaBins[0]
+#dp = pBins[1]-pBins[0]
 cvXsec = np.ndarray([len(thetaBins),len(pBins)])
 
 #Do one test to produce splined plots
@@ -64,69 +66,89 @@ print "test cross section at momentum = "+str(momentumBoundries[1])+", theta = "
 #Fill cross section 2d array
 for ti,t in enumerate(thetaBins):
     for pi,p in enumerate(pBins):
-        cvXsec[pi][ti] = twoDsplineExtended.xsec(p, t, momentumANDtheta, momentumBoundries, thetaBoundries, False, False)
+        temp = twoDsplineExtended.xsec(p, t, momentumANDtheta, momentumBoundries, thetaBoundries, False, False)
+        cvXsec[pi][ti] = temp#*( dt*dp )
 
 #plot histogram of cross section
-fig1 = plt.figure(figsize=(2.75,4))
+fig1 = plt.figure(figsize=(8,6)) #plt.figure(figsize=(2.75,4))
 plt.pcolor(thetaBins,pBins, cvXsec)
 plt.colorbar()
 plt.xlabel('Theta (radians)')
 plt.ylabel('Momentum (GeV/c)')
 plt.title('PiPlus Cross Section (splined)')
 
-fig2 = plt.figure(figsize=(8,6))
-meshAngle,meshMomentum = np.meshgrid(thetaBins,pBins)
-ax2 = fig2.gca(projection='3d')
-surf2 = ax2.plot_surface(meshAngle,meshMomentum, cvXsec,rstride=5, cstride=5,cmap=cm.rainbow)
+
+# #recreate data bins
+# recreatedData = np.ndarray([len(thetaBoundries),len(momentumBoundries)])
+# for ti, tmid in enumerate(thetaMid):
+#     lo_t = thetaBoundries[ti]
+#     hi_t = thetaBoundries[ti+1]
+#
+#     for pi, pmid in enumerate(momentumMid):
+#         lo_p = momentumBoundries[pi]
+#         hi_p = momentumBoundries[pi+1]
+#
+#         recreatedData[pi][ti] =
+
+
+#
+# fig2 = plt.figure(figsize=(8,6))
+# meshAngle,meshMomentum = np.meshgrid(thetaBins,pBins)
+# ax2 = fig2.gca(projection='3d')
+# surf2 = ax2.plot_surface(meshAngle,meshMomentum, cvXsec,rstride=5, cstride=5,cmap=cm.rainbow)
+# plt.xlabel('Theta (radians)')
+# plt.ylabel('Momentum (GeV/c)')
+# plt.title('PiPlus Cross Section (splined)')
+
+
+
+#############################
+##  Plot all phase space   ##
+#############################
+
+#Prepare an 2d array to store the cross section information
+#allThetaBinsBounds = np.linspace(thetaMid[0],thetaMid[-1],50)#
+#allPBinsBounds = np.linspace(momentumMid[0],momentumMid[-1],50)#
+allThetaBinsBounds = np.linspace(0,(np.pi/6.),201)
+allPBinsBounds = np.linspace(0,9,201)
+
+allThetaBinsMid = np.zeros(len(allThetaBinsBounds)-1)
+for i in range(0,len(allThetaBinsBounds)-1):
+    allThetaBinsMid[i] = ((allThetaBinsBounds[i] + allThetaBinsBounds[i+1])/2.)
+
+allPBinsMid = np.zeros(len(allPBinsBounds)-1)
+for i in range(0,len(allPBinsBounds)-1):
+    allPBinsMid[i] = ((allPBinsBounds[i] + allPBinsBounds[i+1])/2.)
+
+cvXsecExtended = np.ndarray([len(allThetaBinsMid),len(allPBinsMid)])
+
+print "allThetaBinsMid size = " + str(cvXsecExtended.shape)
+
+#Fill cross section 2d array
+for ti,t in enumerate(allThetaBinsMid):
+    for pi,p in enumerate(allPBinsMid):
+        cvXsecExtended[pi][ti] = twoDsplineExtended.xsec(p, t, momentumANDtheta, momentumBoundries, thetaBoundries, False, True)
+
+#plot histogram of cross section
+fig3 = plt.figure(figsize=(8,6))
+plt.pcolor(allThetaBinsBounds,allPBinsBounds, cvXsecExtended)
+plt.colorbar()
 plt.xlabel('Theta (radians)')
 plt.ylabel('Momentum (GeV/c)')
-plt.title('PiPlus Cross Section (splined)')
-#
-# #############################
-# ##  Plot all phase space   ##
-# #############################
-#
-# #Prepare an 2d array to store the cross section information
-# #allThetaBinsBounds = np.linspace(thetaMid[0],thetaMid[-1],50)#
-# #allPBinsBounds = np.linspace(momentumMid[0],momentumMid[-1],50)#
-# allThetaBinsBounds = np.linspace(0,(np.pi/6.),201)
-# allPBinsBounds = np.linspace(0,9,201)
-#
-# allThetaBinsMid = np.zeros(len(allThetaBinsBounds)-1)
-# for i in range(0,len(allThetaBinsBounds)-1):
-#     allThetaBinsMid[i] = ((allThetaBinsBounds[i] + allThetaBinsBounds[i+1])/2.)
-#
-# allPBinsMid = np.zeros(len(allPBinsBounds)-1)
-# for i in range(0,len(allPBinsBounds)-1):
-#     allPBinsMid[i] = ((allPBinsBounds[i] + allPBinsBounds[i+1])/2.)
-#
-# cvXsecExtended = np.ndarray([len(allThetaBinsMid),len(allPBinsMid)])
-#
-# #Fill cross section 2d array
-# for ti,t in enumerate(allThetaBinsMid):
-#     for pi,p in enumerate(allPBinsMid):
-#         cvXsecExtended[pi][ti] = twoDsplineExtended.xsec(p, t, momentumANDtheta, momentumBoundries, thetaBoundries, False, True)
-#
-# #plot histogram of cross section
-# fig3 = plt.figure(figsize=(8,6))
-# plt.pcolor(allThetaBinsMid,allPBinsMid, cvXsecExtended)
-# plt.colorbar()
-# plt.xlabel('Theta (radians)')
-# plt.ylabel('Momentum (GeV/c)')
-# plt.title('PiPlus Cross Section (splined)')
-#
-# fig4 = plt.figure(figsize=(8,6))
-# meshAngleAll,meshMomentumAll = np.meshgrid(allThetaBinsMid,allPBinsMid)
-# ax4 = fig4.gca(projection='3d')
-# surf4 = ax4.plot_surface(meshAngleAll,meshMomentumAll, cvXsecExtended,rstride=5, cstride=5,cmap=cm.rainbow)
-# plt.xlabel('Theta (radians)')
-# plt.ylabel('Momentum (GeV/c)')
-# plt.title('PiPlus Cross Section (splined)')
-#
-#
+plt.title('PiPlus Cross Section Combination Spline')
+
+fig4 = plt.figure(figsize=(8,6))
+meshAngleAll,meshMomentumAll = np.meshgrid(allThetaBinsMid,allPBinsMid)
+ax4 = fig4.gca(projection='3d')
+surf4 = ax4.plot_surface(meshAngleAll,meshMomentumAll, cvXsecExtended,rstride=5, cstride=5,cmap=cm.rainbow)
+plt.xlabel('Theta (radians)')
+plt.ylabel('Momentum (GeV/c)')
+plt.title('PiPlus Cross Section Combination Spline')
+
+
 
 ##############################
-## Plot SW Parameterization ##
+## Plot ESW Parameterization ##
 ##############################
 
 #Prepare an 2d array to store the cross section information
@@ -161,7 +183,7 @@ plt.colorbar()
 plt.xlabel('Theta (radians)')
 plt.ylabel('Momentum (GeV/c)')
 #plt.title('PiPlus SW Cross Section (splined)')
-plt.title('PiPlus Extended SW Cross Section (splined)')
+plt.title('PiPlus ESW Cross Section')
 
 fig6 = plt.figure(figsize=(8,6))
 meshAngleAll,meshMomentumAll = np.meshgrid(allThetaBinsMid,allPBinsMid)
@@ -169,75 +191,108 @@ ax6 = fig6.gca(projection='3d')
 surf6 = ax6.plot_surface(meshAngleAll,meshMomentumAll, swXsec,rstride=5, cstride=5,cmap=cm.rainbow)
 plt.xlabel('Theta (radians)')
 plt.ylabel('Momentum (GeV/c)')
-plt.title('PiPlus SW Cross Section (splined)')
+plt.title('PiPlus ESW Cross Section')
 
-##################################
-## Compute volume in eSW & HARP ##
-##################################
-computedVoleSW = np.ndarray([len(momentumMid),len(thetaMid)])
-evaleSW = np.ndarray([len(momentumMid),len(thetaMid)])
+################################
+## Plot ESW Parameterization 2 ##
+################################
 
-volspline = spint.RectBivariateSpline(allPBinsMid,allThetaBinsMid, swXsec)
-z=volspline(allPBinsMid,allThetaBinsMid)
-for idxlowt,lowt in enumerate(thetaBoundries[:-1]):
-    for idxlowp,lowp in enumerate(momentumBoundries[:-1]):
+swXsec = np.ndarray([len(momentumMid),len(thetaMid)])
 
-        vol = volspline.integral(lowp,momentumBoundries[idxlowp+1],lowt,thetaBoundries[idxlowt+1])
-        xs = vol/( (momentumBoundries[idxlowp+1] - lowp) * (thetaBoundries[idxlowt+1] - lowt) )
-        computedVoleSW[idxlowp,idxlowt] = xs
-        evaleSW[idxlowp,idxlowt] = volspline.__call__(momentumMid[idxlowp],thetaMid[idxlowt])
+print "swXsec.shape"
+print swXsec.shape
 
-computedVoleSW2 = np.ndarray([len(allPBinsMid),len(allThetaBinsMid)])
-evaleSW2 = np.ndarray([len(allPBinsMid),len(allThetaBinsMid)])
-for idxlowt,lowt in enumerate(allThetaBinsBounds[:-1]):
-    for idxlowp,lowp in enumerate(allPBinsBounds[:-1]):
-        vol2 = volspline.integral(lowp,allPBinsBounds[idxlowp+1],lowt,allThetaBinsBounds[idxlowt+1])
-        xs2 = vol2/( (allPBinsBounds[idxlowp+1] - lowp) * (allThetaBinsBounds[idxlowt+1] - lowt) )
-        computedVoleSW2[idxlowp,idxlowt] = xs2
-        evaleSW2[idxlowp,idxlowt] = volspline.__call__(allPBinsMid[idxlowp], allThetaBinsMid[idxlowt])
+#Fill cross section 2d array
+for ti,t in enumerate(thetaMid):
+    for pi,p in enumerate(momentumMid):
+        #swXsec[pi][ti] = twoDsplineExtended.sw(p, t)
+        swXsec[pi][ti] = twoDsplineExtended.extsw(p, t)
 
-#diff = momentumANDtheta-computedVoleSW
-#diff2 = momentumANDtheta-computedVoleSW2
-# print "momentumANDtheta"
-# print momentumANDtheta
-# print "computed vol"
-# print computedVoleSW
-# #print diff
-
-fig7 = plt.figure(figsize=(8,6))
-plt.pcolor(thetaBoundries,momentumBoundries, computedVoleSW)
+#plot histogram of cross section
+figa = plt.figure(figsize=(8,6))
+plt.pcolor(thetaBoundries,momentumBoundries, swXsec)
 plt.colorbar()
 plt.xlabel('Theta (radians)')
 plt.ylabel('Momentum (GeV/c)')
-plt.title('Computed spline volumes/area eSW1')
+#plt.title('PiPlus SW Cross Section (splined)')
+plt.title('PiPlus ESW Cross Section 2')
 
-fig75 = plt.figure(figsize=(8,6))
-plt.pcolor(thetaBoundries,momentumBoundries, evaleSW)
-plt.colorbar()
+figb = plt.figure(figsize=(8,6))
+meshAngleAll,meshMomentumAll = np.meshgrid(thetaMid,momentumMid)
+axb = figb.gca(projection='3d')
+surfb = axb.plot_surface(meshAngleAll,meshMomentumAll, swXsec,rstride=1, cstride=1,cmap=cm.rainbow)
 plt.xlabel('Theta (radians)')
 plt.ylabel('Momentum (GeV/c)')
-plt.title('Evaluated spline eSW1')
+plt.title('PiPlus ESW Cross Section 2')
 
-fig76 = plt.figure(figsize=(8,6))
-plt.pcolor(thetaBoundries,momentumBoundries, computedVoleSW/evaleSW)
-plt.colorbar()
-plt.xlabel('Theta (radians)')
-plt.ylabel('Momentum (GeV/c)')
-plt.title('ratio')
 
-fig8 = plt.figure(figsize=(8,6))
-plt.pcolor(allThetaBinsBounds,allPBinsBounds, computedVoleSW2)
-plt.colorbar()
-plt.xlabel('Theta (radians)')
-plt.ylabel('Momentum (GeV/c)')
-plt.title('Computed spline volumes/area eSW2')
-
-fig85 = plt.figure(figsize=(8,6))
-plt.pcolor(allThetaBinsBounds,allPBinsBounds, computedVoleSW2)
-plt.colorbar()
-plt.xlabel('Theta (radians)')
-plt.ylabel('Momentum (GeV/c)')
-plt.title('Evaluated spline eSW2')
+# ##################################
+# ## Compute volume in eSW & HARP ##
+# ##################################
+# computedVoleSW = np.ndarray([len(momentumMid),len(thetaMid)])
+# evaleSW = np.ndarray([len(momentumMid),len(thetaMid)])
+#
+# volspline = spint.RectBivariateSpline(allPBinsMid,allThetaBinsMid, swXsec)
+# z=volspline(allPBinsMid,allThetaBinsMid)
+# for idxlowt,lowt in enumerate(thetaBoundries[:-1]):
+#     for idxlowp,lowp in enumerate(momentumBoundries[:-1]):
+#
+#         vol = volspline.integral(lowp,momentumBoundries[idxlowp+1],lowt,thetaBoundries[idxlowt+1])
+#         xs = vol/( (momentumBoundries[idxlowp+1] - lowp) * (thetaBoundries[idxlowt+1] - lowt) )
+#         computedVoleSW[idxlowp,idxlowt] = xs
+#         evaleSW[idxlowp,idxlowt] = volspline.__call__(momentumMid[idxlowp],thetaMid[idxlowt])
+#
+# computedVoleSW2 = np.ndarray([len(allPBinsMid),len(allThetaBinsMid)])
+# evaleSW2 = np.ndarray([len(allPBinsMid),len(allThetaBinsMid)])
+# for idxlowt,lowt in enumerate(allThetaBinsBounds[:-1]):
+#     for idxlowp,lowp in enumerate(allPBinsBounds[:-1]):
+#         vol2 = volspline.integral(lowp,allPBinsBounds[idxlowp+1],lowt,allThetaBinsBounds[idxlowt+1])
+#         xs2 = vol2/( (allPBinsBounds[idxlowp+1] - lowp) * (allThetaBinsBounds[idxlowt+1] - lowt) )
+#         computedVoleSW2[idxlowp,idxlowt] = xs2
+#         evaleSW2[idxlowp,idxlowt] = volspline.__call__(allPBinsMid[idxlowp], allThetaBinsMid[idxlowt])
+#
+# #diff = momentumANDtheta-computedVoleSW
+# #diff2 = momentumANDtheta-computedVoleSW2
+# # print "momentumANDtheta"
+# # print momentumANDtheta
+# # print "computed vol"
+# # print computedVoleSW
+# # #print diff
+#
+# fig7 = plt.figure(figsize=(8,6))
+# plt.pcolor(thetaBoundries,momentumBoundries, computedVoleSW)
+# plt.colorbar()
+# plt.xlabel('Theta (radians)')
+# plt.ylabel('Momentum (GeV/c)')
+# plt.title('Computed spline volumes/area eSW1')
+#
+# fig75 = plt.figure(figsize=(8,6))
+# plt.pcolor(thetaBoundries,momentumBoundries, evaleSW)
+# plt.colorbar()
+# plt.xlabel('Theta (radians)')
+# plt.ylabel('Momentum (GeV/c)')
+# plt.title('Evaluated spline eSW1')
+#
+# fig76 = plt.figure(figsize=(8,6))
+# plt.pcolor(thetaBoundries,momentumBoundries, computedVoleSW/evaleSW)
+# plt.colorbar()
+# plt.xlabel('Theta (radians)')
+# plt.ylabel('Momentum (GeV/c)')
+# plt.title('ratio')
+#
+# fig8 = plt.figure(figsize=(8,6))
+# plt.pcolor(allThetaBinsBounds,allPBinsBounds, computedVoleSW2)
+# plt.colorbar()
+# plt.xlabel('Theta (radians)')
+# plt.ylabel('Momentum (GeV/c)')
+# plt.title('Computed spline volumes/area eSW2')
+#
+# fig85 = plt.figure(figsize=(8,6))
+# plt.pcolor(allThetaBinsBounds,allPBinsBounds, computedVoleSW2)
+# plt.colorbar()
+# plt.xlabel('Theta (radians)')
+# plt.ylabel('Momentum (GeV/c)')
+# plt.title('Evaluated spline eSW2')
 
 #figa = plt.figure(figsize=(8,6))
 #plt.volspline

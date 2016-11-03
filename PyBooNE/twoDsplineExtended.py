@@ -70,10 +70,10 @@ def extsw(piMomentum, piAngle, incidentProtonMomentum=8.89):
 
 def xsec(requestedP, requestedT, PandT, PBoundries, TBoundries, plots=True, extended=False):
 
-    splineConfig=1 #the last bin spacing on the edges of the HARP data are continued into the SW
+    #splineConfig=1 #the last bin spacing on the edges of the HARP data are continued into the SW
     #splineConfig=2 #10 bins on all edges of HARP data
     #splineConfig=3 #the finest bin spacing of HARP is used everywhere
-    #splineConfig=4 #triple finest bin spacing of HARP for everywhere
+    splineConfig=4 #triple finest bin spacing of HARP for everywhere
 
     if extended:
 
@@ -157,6 +157,11 @@ def xsec(requestedP, requestedT, PandT, PBoundries, TBoundries, plots=True, exte
         for i in range(0,len(PBoundriesHARP)-1):
             PMidHARP[i] = ((PBoundriesHARP[i] + PBoundriesHARP[i+1] )/2.)
 
+        TBoundriesHARP = TBoundries
+        TMidHARP = np.zeros(len(TBoundriesHARP)-1)
+        for i in range(0,len(TBoundriesHARP)-1):
+            TMidHARP[i] = ((TBoundriesHARP[i] + TBoundriesHARP[i+1] )/2.)
+
         #labelling scheme for other parts of phase space not covered by HARP
         # ^ Momentum
         #__________________
@@ -182,44 +187,63 @@ def xsec(requestedP, requestedT, PandT, PBoundries, TBoundries, plots=True, exte
 
 
 
+
+
+
+
+
+
         #compute left sampling
-        left = np.ndarray([len(PMidHARP),len(LoTMid)])
-        for t,theta in enumerate(LoTMid):
-            for p,momentum in enumerate(PMidHARP):
-                left[p,t] = extsw(momentum,theta)
+        #LoTMid_dt = LoTMid[1]-LoTMid[0]
+        #PMidHARP_dp = PMidHARP[1]-PMidHARP[0]
+        left = np.zeros([len(PMidHARP),len(LoTMid)])
+        # for t,theta in enumerate(LoTMid):
+        #     for p,momentum in enumerate(PMidHARP):
+        #         left[p,t] = extsw(momentum,theta)#*LoTMid_dt*PMidHARP_dp
 
         #compute right sampling
-        right = np.ndarray([len(PMidHARP),len(HiTMid)])
-        for t,theta in enumerate(HiTMid):
-            for p,momentum in enumerate(PMidHARP):
-                right[p,t] = extsw(momentum,theta)
+        #HiTMid_dt = HiTMid[1]-HiTMid[0]
+        right = np.zeros([len(PMidHARP),len(HiTMid)])
+        # for t,theta in enumerate(HiTMid):
+        #     for p,momentum in enumerate(PMidHARP):
+        #         right[p,t] = extsw(momentum,theta)#*HiTMid_dt*PMidHARP_dp
 
         #compute top sampling
-        top = np.ndarray([len(HiPMid),len(TMidTot)])
-        for t,theta in enumerate(TMidTot):
-            for p,momentum in enumerate(HiPMid):
-                top[p,t] = extsw(momentum,theta)
+        #HiPMid_dp = HiPMid[1]-HiPMid[0]
+        #TMidTot_dt = TMidTot[1]-TMidTot[0]
+        top = np.zeros([len(HiPMid),len(TMidTot)])
+        # for t,theta in enumerate(TMidTot):
+        #     for p,momentum in enumerate(HiPMid):
+        #         top[p,t] = extsw(momentum,theta)#*HiPMid_dp*TMidTot_dt
 
         #compute bottom sampling
-        bottom = np.ndarray([len(LoPMid),len(TMidTot)])
-        for t,theta in enumerate(TMidTot):
-            for p,momentum in enumerate(LoPMid):
-                bottom[p,t] = extsw(momentum,theta)
+        #LoPMid_dp = LoPMid[1]-LoPMid[0]
+        bottom = np.zeros([len(LoPMid),len(TMidTot)])
+        # for t,theta in enumerate(TMidTot):
+        #     for p,momentum in enumerate(LoPMid):
+        #         bottom[p,t] = extsw(momentum,theta)#*LoPMid_dp*TMidTot_dt
 
 
         #put together the SW outside estimates with the actual HARP data
+        PandTWeighted = PandT
+        # for ti in range(0,len(TMidHARP)):
+        #     #dt = TBoundriesHARP[ti+1]-TBoundriesHARP[ti]
+        #     for pi in range(0,len(PMidHARP)):
+        #         #dp = PBoundriesHARP[pi+1]-PBoundriesHARP[pi]
+        #         PandTWeighted[pi,ti]=PandTWeighted[pi,ti]#/(dt*dp)
 
-        LPandT = np.concatenate((left, PandT), axis=1)
+        LPandT = np.concatenate((left, PandTWeighted), axis=1)
         LPandTR = np.concatenate((LPandT,right), axis=1)
 
         bottomLPandTR = np.concatenate((bottom,  LPandTR), axis=0)
         bottomLPandTRtop = np.concatenate((bottomLPandTR,top),axis=0)
 
-        PandT = bottomLPandTR
+        PandT = bottomLPandTRtop
 
         TBoundries = TBoundriesTot
-        PBoundries = np.append(LoPBoundries[:-1],PBoundries)
-        PBoundries = np.append(PBoundries,HiPBoundries[1:])
+        PBoundriesLowMid = np.append(LoPBoundries[:-1],PBoundries)
+        PBoundriesLowMidHi = np.append(PBoundriesLowMid,HiPBoundries[1:])
+        PBoundries=PBoundriesLowMidHi
 
         # print "TBoundries:"
         # print TBoundries.shape
@@ -239,7 +263,7 @@ def xsec(requestedP, requestedT, PandT, PBoundries, TBoundries, plots=True, exte
     for t in range(0,len(TBoundries)-1):
         name = "histt_" + str(t)
         bins = len(PBoundries)-1
-        titles = "Momentum " + str(TBoundries[t]) + " to " + str(TBoundries[t+1])
+        titles = "Momentum for angles: " + str(TBoundries[t]) + " to " + str(TBoundries[t+1])
         thisHist = rt.TH1F(name,titles,bins, PBoundries)
         thisHist.SetXTitle("Momentum (GeV/c)")
         thisHist.SetYTitle("Entries")
@@ -248,12 +272,12 @@ def xsec(requestedP, requestedT, PandT, PBoundries, TBoundries, plots=True, exte
         p=0
         for element in these_momenta:
             thisbin = p+1
-            weightedElement = element #*((TBoundries[t+1] - TBoundries[t]) * (PBoundries[p+1]-PBoundries[p]))
+            weightedElement = element#/(PBoundries[p+1]-PBoundries[p]) #*((TBoundries[t+1] - TBoundries[t]) * (PBoundries[p+1]-PBoundries[p]))
             thisHist.SetBinContent(thisbin,weightedElement)
             p+=1
 
         histConstantT.append(thisHist)
-        thisSpline = rt.TSpline3(thisHist)
+        thisSpline = rt.TSpline3(thisHist, "b1e1",0,0)
         splinename = "splinet_" + str(t)
         splinetitle = "Theta " + str(TBoundries[t]) + " to " + str(TBoundries[t+1]) + ";Momentum (GeV/c);Entries"
         thisSpline.SetNameTitle(splinename,splinetitle)
@@ -269,10 +293,11 @@ def xsec(requestedP, requestedT, PandT, PBoundries, TBoundries, plots=True, exte
     t = 0
     for tspline in splinesConstantT:
         thisbin = t+1
-        histConstantP.SetBinContent(thisbin,tspline.Eval(requestedP))
+        tsplineEvalWeighted = tspline.Eval(requestedP)#/(TBoundries[t+1] - TBoundries[t])
+        histConstantP.SetBinContent(thisbin,tsplineEvalWeighted)
         t += 1
 
-    splineConstantP = rt.TSpline3(histConstantP)
+    splineConstantP = rt.TSpline3(histConstantP, "b1e1",0,0)
     splinename = "splinep"
     splinetitle = "Momementum = " + str(requestedP) + ";Theta (radians);Entries"
     splineConstantP.SetNameTitle(splinename,splinetitle)
@@ -301,6 +326,7 @@ def xsec(requestedP, requestedT, PandT, PBoundries, TBoundries, plots=True, exte
         #cConstT.SaveAs("splines.root")
         cConstT.Print("splines_new.pdf")
 
+    #print "xsec call, extended=" + str(extended)
     return crossSection
 
 def getFakeData(randseed, n, cv, errmat):
