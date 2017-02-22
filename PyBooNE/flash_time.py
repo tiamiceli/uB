@@ -1,4 +1,6 @@
 import numpy as np
+import scipy as sp
+from scipy import optimize
 import ROOT
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -10,6 +12,48 @@ plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
 # [4000,4500] : 1127678 BNB events, 276205 NuMI events, 36206 cosmic (EXT) events
 # 795004 BNB events, 91004 NuMI events, 9551 cosmic (EXT) events
+
+
+def trapizoid_bump(x, x0, y0, x1, k1, x2, x3, k3):
+    return np.piecewise(x, [x < x0,\
+                            (x >= x0) & (x < x1),\
+                            (x >= x1) & (x < x2),\
+                            (x >= x2) & (x < x3)\
+                            ],\
+                        [lambda x:y0,\
+                         lambda x:k1*x + y0-k1*x0,\
+                         lambda x:y0-k1*x0+k1*x1,\
+                         lambda x:k3*x + y0-k1*x0+k1*x1-k3*x2,\
+                         lambda x:y0-k1*x0+k1*x1-k3*x2+k3*x3\
+                         ])
+
+def trapizoid_bump1(x, x0, x1, k1, x2, x3, k3):
+    return np.piecewise(x, [x <= x0,\
+                            (x > x0) & (x <= x1),\
+                            (x > x1) & (x <= x2),\
+                            (x > x2) & (x <= x3)\
+                            ],\
+                        [lambda x:1,\
+                         lambda x:k1*x + 1-k1*x0,\
+                         lambda x:       1-k1*x0+k1*x1,\
+                         lambda x:k3*x + 1-k1*x0+k1*x1-k3*x2,\
+                         lambda x:       1\
+                         ])
+
+def trapizoid_bump2(x, x0, x1, y1, x2, x3):
+    return np.piecewise(x, [x < x0,\
+                            (x >= x0) & (x < x1),\
+                            (x >= x1) & (x < x2),\
+                            (x >= x2) & (x < x3),\
+                            x>= x3
+                            ],\
+                        [lambda x:1,\
+                         lambda x:x*((y1-1)/(x1-x0)) + (1-x0*((y1 -1)/(x1-x0))),\
+                         lambda x:y1,\
+                         lambda x:x*((1-y1)/(x3-x2)) + (1-x3*((1-y1)/(x3-x2))),\
+                         lambda x:1\
+                         ])
+
 BNB_events  = 1127678 + 795004
 EXT_events  = 36206 + 9551
 NUMI_events = 276205 + 91004
@@ -67,6 +111,23 @@ errs /= EXT_rate
 fig = plt.figure(figsize=(10,6))
 plt.errorbar(bin_centers,vals,xerr=bin_width/2.,yerr=errs,color='r',fmt='o',label='BNB Trigger Data (Beam-On)  [%.02fE18 POT]'%pot_BNB )
 plt.axhspan(1-normed_err,1+normed_err,alpha=0.5,color='b',label='Measured Cosmic Rate (Beam-Off)')
+
+#fitting
+trapizoidboundsBNB=([3,  0.9 ,3.3 ,-np.inf,4.6   ,4.8,-np.inf],\
+                    [3.3, 1.1 ,3.5   , np.inf,4.8,5.0, np.inf])
+trapizoidboundsBNB1=([3 ,3.3 ,-np.inf,4.6   ,4.8,-np.inf],\
+                    [3.3,3.5 , np.inf,4.8,5.0, np.inf])
+#trapizoidboundsBNB2=([3,   3.3, 0,  4.6, 4.8],\
+#                     [3.3, 3.5, 10, 4.8, 5.0])
+trapizoidboundsBNB2=([2.5, 3.3, 0, 4,   4.8],\
+                     [3.3, 4,   2, 4.8, 6  ])
+
+pBNB , eBNB = optimize.curve_fit(f=trapizoid_bump2, xdata=bin_centers, ydata=vals, bounds=trapizoidboundsBNB2)
+xdBNB = np.linspace(2,10,1000)
+vertBNB = [pBNB[0],pBNB[1],pBNB[3],pBNB[4]]
+plt.plot(xdBNB, trapizoid_bump2(xdBNB, *pBNB),color='green')
+plt.plot(vertBNB, trapizoid_bump2(vertBNB, *pBNB),'o',color='green')
+
 plt.xlim([2,10])
 plt.legend(numpoints = 1, fontsize=14)
 plt.grid()
@@ -77,9 +138,11 @@ plt.savefig('BNB.png')
 plt.savefig('BNB.pdf')
 plt.show()
 
+#NUMI
+
 tbin_NUMI = 0.5
 tmin_NUMI = 0
-tmax_NUMI = 25.5
+tmax_NUMI = 23 #25.5
 bins_NUMI = np.linspace(tmin_NUMI,tmax_NUMI, int((tmax_NUMI-tmin_NUMI)/tbin_NUMI) )
 vals, bins = np.histogram(dt_NUMI,bins=bins_NUMI)
 bin_width = bins[1]-bins[0]
@@ -94,6 +157,23 @@ errs /= EXT_rate
 fig = plt.figure(figsize=(10,6))
 plt.errorbar(bin_centers,vals,xerr=bin_width/2.,yerr=errs,color='r',fmt='o',label='NuMI Trigger Data (Beam-On)  [%.02fE18 POT]'%pot_NUMI)
 plt.axhspan(1-normed_err,1+normed_err,alpha=0.5,color='b',label='Measured Cosmic Rate (Beam-Off)')
+
+#fitting
+trapizoidboundsNUMI=([4,  0.9 ,5.5 ,-np.inf,14   ,15.25,-np.inf],\
+                     [5.5, 1.1 ,7   , np.inf,15.25,15.75, np.inf])
+trapizoidboundsNUMI1=([4 ,5.5 ,-np.inf,14   ,15.25,-np.inf],\
+                     [5.5,9   , np.inf,15.25,17, np.inf])
+#trapizoidboundsNUMI2=([4,   5.5, 0,  14,    15.25],\
+#                      [5.5, 7,   10, 15.25, 15.75])
+trapizoidboundsNUMI2=([4,   5.5, 0, 10,    15.25],\
+                      [5.5, 10,  2, 15.25, 20])
+pNUMI , eNUMI = optimize.curve_fit(f=trapizoid_bump2, xdata=bin_centers, ydata=vals, bounds=trapizoidboundsNUMI2)
+xdNUMI = np.linspace(2.75,23.25,1000)
+vertNUMI = [pNUMI[0],pNUMI[1],pNUMI[3],pNUMI[4]]
+print vertNUMI
+plt.plot(xdNUMI, trapizoid_bump2(xdNUMI, *pNUMI),color='green')
+plt.plot(vertNUMI, trapizoid_bump2(vertNUMI, *pNUMI),'o',color='green')
+
 plt.xlim([2.75,23.25])
 plt.legend(numpoints = 1, fontsize=14)
 plt.grid()
