@@ -15,6 +15,7 @@ plt.rc('font', family='serif')
 # 795004 BNB events, 91004 NuMI events, 9551 cosmic (EXT) events
 
 def trapizoid_bump(x, x0, x1, y1, x2, x3):
+    
     return np.piecewise(x, [x < x0,\
                             (x >= x0) & (x < x1),\
                             (x >= x1) & (x < x2),\
@@ -119,7 +120,7 @@ print 'EXT events : ',EXT_events
 #print 'the error on the external rate is ',err_EXT
 
 #tbin_BNB = 0.15
-tbin_BNB = 0.03
+tbin_BNB = 0.02
 tmin_BNB = 2
 tmax_BNB = 10
 bins_BNB = np.linspace(tmin_BNB,tmax_BNB, int((tmax_BNB-tmin_BNB)/tbin_BNB) )
@@ -134,14 +135,18 @@ vals /= EXT_rate
 errs /= ( tbin_BNB * float(BNB_events) )
 errs /= EXT_rate
 fig = plt.figure(figsize=(10,6))
-plt.errorbar(bin_centers,vals,xerr=bin_width/2.,yerr=errs,color='r',fmt='o',label='BNB Trigger Data (Beam-On)  [%i events]'%BNB_events )
+plt.errorbar(bin_centers,vals,xerr=bin_width/2.,yerr=errs,color='r',fmt='o',label='BNB Run 2 Trigger Data (Beam-On)  [%0.2e events]'%BNB_events )
 plt.axhspan(1-normed_err,1+normed_err,alpha=0.5,color='b',label='Measured Cosmic Rate (Beam-Off)')
 
 #fitting
-trapizoidboundsBNB=([2.5, 3.3, 0, 4,   4.8],\
-                    [3.3, 4,   2, 4.8, 6  ])
+#trapizoidboundsBNB=([2.5, 3.225, 0, 4,   4.75],\
+#                    [3.225, 4,   2, 4.75, 6  ])
 
-pBNB , eBNB = optimize.curve_fit(f=trapizoid_bump, xdata=bin_centers, ydata=vals, bounds=trapizoidboundsBNB)
+trapizoidboundsBNB=([2.5, 2.5, 0, 4,   4],\
+                    [4, 4,   2, 6, 6  ])
+
+
+pBNB , eBNB = optimize.curve_fit(f=trapizoid_bump, xdata=bin_centers, ydata=vals,p0=[3.2,3.25,1.3,4.6,4.8], method='lm')#, bounds=trapizoidboundsBNB)
 xdBNB = np.linspace(2,10,1000)
 vertBNB = [pBNB[0],pBNB[1],pBNB[3],pBNB[4]]
 
@@ -163,7 +168,7 @@ plt.plot(vertBNB, trapizoid_bump(vertBNB, *pBNB),'o',color='green')
 plt.xlim([tmin_BNB,tmax_BNB])
 plt.legend(numpoints = 1, fontsize=14)
 plt.grid()
-plt.ylim([0.7,1.8])
+plt.ylim([0.5,2.5])
 plt.xlabel(r'Time with respect to the BNB Trigger Time [$\mu$s]')
 plt.ylabel(r'Fractional Flash Count per %.02f $\mu$s \newline with respect to Cosmic Background'%(tbin_BNB))
 plt.savefig('BNB_run2.png')

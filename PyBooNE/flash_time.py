@@ -67,8 +67,9 @@ print 'EXT events : ',EXT_events
 #print 'the average external rate is ',avg_EXT
 #print 'the error on the external rate is ',err_EXT
 
-tbin_BNB = 0.15
-tmin_BNB = 0.1
+#tbin_BNB = 0.15
+tbin_BNB = 0.02
+tmin_BNB = 2#0.1
 tmax_BNB = 10
 bins_BNB = np.linspace(tmin_BNB,tmax_BNB, int((tmax_BNB-tmin_BNB)/tbin_BNB) )
 vals, bins = np.histogram(dt_BNB,bins=bins_BNB)
@@ -82,33 +83,49 @@ vals /= EXT_rate
 errs /= ( tbin_BNB * float(BNB_events) )
 errs /= EXT_rate
 fig = plt.figure(figsize=(10,6))
-plt.errorbar(bin_centers,vals,xerr=bin_width/2.,yerr=errs,color='r',fmt='o',label='BNB Trigger Data (Beam-On)  [%.02fE18 POT]'%pot_BNB )
+plt.errorbar(bin_centers,vals,xerr=bin_width/2.,yerr=errs,color='r',fmt='o',label='BNB Run 1 Trigger Data (Beam-On)  [%0.2e events]'%BNB_events )
 plt.axhspan(1-normed_err,1+normed_err,alpha=0.5,color='b',label='Measured Cosmic Rate (Beam-Off)')
 
 #fitting
-trapizoidboundsBNB=([2.5, 3.3, 0, 4,   4.8],\
-                    [3.3, 4,   2, 4.8, 6  ])
+trapizoidboundsBNB=([2.5, 3.3, 0, 4,   4.85],\
+                    [3.3, 4,   2, 4.85, 6  ])
 
-pBNB , eBNB = optimize.curve_fit(f=trapizoid_bump, xdata=bin_centers, ydata=vals, bounds=trapizoidboundsBNB)
+pBNB , eBNB = optimize.curve_fit(f=trapizoid_bump, xdata=bin_centers, ydata=vals,p0=[3.2,3.25,1.3,4.6,4.8], method='lm')
+#pBNB , eBNB = optimize.curve_fit(f=trapizoid_bump, xdata=bin_centers, ydata=vals, bounds=trapizoidboundsBNB)
 xdBNB = np.linspace(2,10,1000)
 vertBNB = [pBNB[0],pBNB[1],pBNB[3],pBNB[4]]
+
+print "eBNB="
+print eBNB
+
+riseXdiffBNB  = pBNB[1]-pBNB[0]
+riseXdiffBNBe = np.sqrt(eBNB[1][1]**2+eBNB[0][0]**2 - 2.0*eBNB[0][1])
+
+fallXdiffBNB  = pBNB[4]-pBNB[3]
+fallXdiffBNBe = np.sqrt(eBNB[4][4]*eBNB[4][4]+eBNB[3][3]*eBNB[3][3] - 2.0*eBNB[3][4])
+
+print "riseXdiffBNB = " + str(riseXdiffBNB) + " \pm " + str(riseXdiffBNBe)
+print "fallXdiffBNB = " + str(fallXdiffBNB) + " \pm " + str(fallXdiffBNBe)
+
 plt.plot(xdBNB, trapizoid_bump(xdBNB, *pBNB),color='green')
 plt.plot(vertBNB, trapizoid_bump(vertBNB, *pBNB),'o',color='green')
 
 plt.xlim([2,10])
 plt.legend(numpoints = 1, fontsize=14)
 plt.grid()
-plt.ylim([0.9,1.8])
+plt.ylim([0.5,2.5])
 plt.xlabel(r'Time with respect to the BNB Trigger Time [$\mu$s]')
-plt.ylabel(r'Fractional Flash Count per 0.15 $\mu$s \newline with respect to Cosmic Background')
-plt.savefig('BNB.png')
-plt.savefig('BNB.pdf')
+plt.ylabel(r'Fractional Flash Count per '+str(tbin_BNB)+' $\mu$s \newline with respect to Cosmic Background')
+plt.savefig('BNB_run1.png')
+plt.savefig('BNB_run1.pdf')
 plt.show()
 
 #NUMI
 
-tbin_NUMI = 0.5
-tmin_NUMI = 0
+#tbin_NUMI = 0.5
+#tbin_NUMI = 0.08
+tbin_NUMI = 0.1
+tmin_NUMI = 3#0
 tmax_NUMI = 23 #25.5
 bins_NUMI = np.linspace(tmin_NUMI,tmax_NUMI, int((tmax_NUMI-tmin_NUMI)/tbin_NUMI) )
 vals, bins = np.histogram(dt_NUMI,bins=bins_NUMI)
@@ -122,25 +139,37 @@ vals /= EXT_rate
 errs /= ( tbin_NUMI * float(NUMI_events) )
 errs /= EXT_rate
 fig = plt.figure(figsize=(10,6))
-plt.errorbar(bin_centers,vals,xerr=bin_width/2.,yerr=errs,color='r',fmt='o',label='NuMI Trigger Data (Beam-On)  [%.02fE18 POT]'%pot_NUMI)
+plt.errorbar(bin_centers,vals,xerr=bin_width/2.,yerr=errs,color='r',fmt='o',label='NuMI Run 1 Trigger Data (Beam-On)  [%0.2e events]'%NUMI_events)
 plt.axhspan(1-normed_err,1+normed_err,alpha=0.5,color='b',label='Measured Cosmic Rate (Beam-Off)')
 
 #fitting
-trapizoidboundsNUMI=([4,   5.5, 0, 10,    15.25],\
-                      [5.5, 10,  2, 15.25, 20])
-pNUMI , eNUMI = optimize.curve_fit(f=trapizoid_bump, xdata=bin_centers, ydata=vals, bounds=trapizoidboundsNUMI)
+trapizoidboundsNUMI=([4,   5.8, 0, 10,    15.3],\
+                      [5.8, 10,  2, 15.3, 20])
+#pNUMI , eNUMI = optimize.curve_fit(f=trapizoid_bump, xdata=bin_centers, ydata=vals, bounds=trapizoidboundsNUMI)
+pNUMI , eNUMI = optimize.curve_fit(f=trapizoid_bump, xdata=bin_centers, ydata=vals, p0=[5.5,6.25,1.3,15,15.75])
 xdNUMI = np.linspace(2.75,23.25,1000)
 vertNUMI = [pNUMI[0],pNUMI[1],pNUMI[3],pNUMI[4]]
-print vertNUMI
+
+riseXdiffNUMI  = pNUMI[1]-pNUMI[0]
+riseXdiffNUMIe = np.sqrt(eNUMI[1][1]*eNUMI[1][1]+eNUMI[0][0]*eNUMI[0][0] - 2.0*eNUMI[0][1])
+
+fallXdiffNUMI  = pNUMI[4]-pNUMI[3]
+fallXdiffNUMIe = np.sqrt(eNUMI[4][4]*eNUMI[4][4]+eNUMI[3][3]*eNUMI[3][3] - 2.0*eNUMI[3][4])
+
+print "riseXdiffNUMI = " + str(riseXdiffNUMI) + " \pm " + str(riseXdiffNUMIe)
+print "fallXdiffNUMI = " + str(fallXdiffNUMI) + " \pm " + str(fallXdiffNUMIe)
 plt.plot(xdNUMI, trapizoid_bump(xdNUMI, *pNUMI),color='green')
 plt.plot(vertNUMI, trapizoid_bump(vertNUMI, *pNUMI),'o',color='green')
 
-plt.xlim([2.75,23.25])
+#plt.xlim([2.75,23.25])
+plt.xlim([3,23])
 plt.legend(numpoints = 1, fontsize=14)
 plt.grid()
-plt.ylim([0.9,1.5])
+plt.ylim([0.5,2])
 plt.xlabel(r'Time with respect to the NuMI Trigger Time [$\mu$s]')
-plt.ylabel(r'Fractional Flash Count per 0.5 $\mu$s \newline with respect to Cosmic Background')
-plt.savefig('NUMI.png')
-plt.savefig('NUMI.pdf')
+plt.ylabel(r'Fractional Flash Count per '+str(tbin_NUMI)+' $\mu$s \newline with respect to Cosmic Background')
+plt.savefig('NUMI_run1.png')
+plt.savefig('NUMI_run1.pdf')
 plt.show()
+
+print "done"
