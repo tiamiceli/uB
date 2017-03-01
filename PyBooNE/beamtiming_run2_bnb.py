@@ -120,7 +120,8 @@ print 'EXT events : ',EXT_events
 #print 'the error on the external rate is ',err_EXT
 
 #tbin_BNB = 0.15
-tbin_BNB = 0.02
+#tbin_BNB = 0.02
+tbin_BNB = 0.005
 tmin_BNB = 2
 tmax_BNB = 10
 bins_BNB = np.linspace(tmin_BNB,tmax_BNB, int((tmax_BNB-tmin_BNB)/tbin_BNB) )
@@ -146,7 +147,7 @@ trapizoidboundsBNB=([2.5, 2.5, 0, 4,   4],\
                     [4, 4,   2, 6, 6  ])
 
 
-pBNB , eBNB = optimize.curve_fit(f=trapizoid_bump, xdata=bin_centers, ydata=vals,p0=[3.2,3.25,1.3,4.6,4.8], method='lm')#, bounds=trapizoidboundsBNB)
+pBNB , eBNB = optimize.curve_fit(f=trapizoid_bump, xdata=bin_centers, sigma=errs, ydata=vals,p0=[3.2,3.25,1.3,4.6,4.8], method='lm')#, bounds=trapizoidboundsBNB)
 xdBNB = np.linspace(2,10,1000)
 vertBNB = [pBNB[0],pBNB[1],pBNB[3],pBNB[4]]
 
@@ -161,6 +162,16 @@ fallXdiffBNBe = np.sqrt(eBNB[4][4]*eBNB[4][4]+eBNB[3][3]*eBNB[3][3] - 2.0*eBNB[3
 
 print "riseXdiffBNB = " + str(riseXdiffBNB) + " \pm " + str(riseXdiffBNBe)
 print "fallXdiffBNB = " + str(fallXdiffBNB) + " \pm " + str(fallXdiffBNBe)
+
+spillWidth = pBNB[3]-pBNB[1]
+spillWidthe =np.sqrt(eBNB[3][3]*eBNB[3][3]+eBNB[1][1]*eBNB[1][1] - 2.0*eBNB[1][3])
+
+print "spillWidth = " + str(spillWidth) + " \pm " + str(spillWidthe)
+
+spillWidthb = pBNB[4]-pBNB[0]
+spillWidthbe =np.sqrt(eBNB[4][4]*eBNB[4][4]+eBNB[0][0]*eBNB[0][0] - 2.0*eBNB[0][4])
+
+print "spillWidthb = " + str(spillWidthb) + " \pm " + str(spillWidthbe)
 
 plt.plot(xdBNB, trapizoid_bump(xdBNB, *pBNB),color='green')
 plt.plot(vertBNB, trapizoid_bump(vertBNB, *pBNB),'o',color='green')

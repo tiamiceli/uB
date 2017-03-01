@@ -76,7 +76,7 @@ print 'EXT events : ',EXT_events
 #print 'the error on the external rate is ',err_EXT
 
 #tbin_NUMI = 0.5
-tbin_NUMI = 0.1
+tbin_NUMI = 0.2
 tmin_NUMI = TMIN
 tmax_NUMI = TMAX
 bins_NUMI = np.linspace(tmin_NUMI,tmax_NUMI, int((tmax_NUMI-tmin_NUMI)/tbin_NUMI) )
@@ -98,7 +98,7 @@ plt.axhspan(1-normed_err,1+normed_err,alpha=0.5,color='b',label='Measured Cosmic
 trapizoidboundsNUMI=([4,   5.5, 0, 10,    15.25],\
                      [5.5, 10,  2, 15.25, 20])
 #pNUMI , eNUMI = optimize.curve_fit(f=trapizoid_bump, xdata=bin_centers, ydata=vals, bounds=trapizoidboundsNUMI)
-pNUMI , eNUMI = optimize.curve_fit(f=trapizoid_bump, xdata=bin_centers, ydata=vals, p0=[5.5,6.25,1.3,15,15.75])
+pNUMI , eNUMI = optimize.curve_fit(f=trapizoid_bump, xdata=bin_centers, sigma=errs, ydata=vals, p0=[5.5,6.25,1.3,15,15.75], method='lm')
 xdNUMI = np.linspace(2.75,23.25,2000)
 vertNUMI = [pNUMI[0],pNUMI[1],pNUMI[3],pNUMI[4]]
 
